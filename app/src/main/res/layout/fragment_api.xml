@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.apifragments.ApiFragment"
+    android:id="@+id/apiFragment"
+    android:padding="8dp">
+
+
+    <SearchView
+        android:id="@+id/searchViewBody"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacing="8dp"
+        app:singleLine="true"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchViewBody">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_planet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Planet"
+            android:checkable="true"
+            android:background="@color/black" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_moon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Moon"
+            android:checkable="true"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Star"
+            android:checkable="true"/>
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewBody"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/item_body"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

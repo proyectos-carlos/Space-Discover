@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Discover Nasa</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_api">Search</string>
+    <string name="menu_saved">Saved</string>
+    <string name="menu_calendar">Near events</string>
 </resources>

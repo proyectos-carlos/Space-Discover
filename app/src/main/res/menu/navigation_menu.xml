@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/apiFragment"
+        android:title="@string/menu_api"
+        android:icon="@drawable/ic_compass" />
+
+    <item android:id="@+id/savesFragment"
+        android:title="@string/menu_saved"
+    android:icon="@drawable/ic_bookmarks"
+        />
+
+    <item android:id="@+id/calendarFragment"
+        android:title="@string/menu_calendar"
+        android:icon="@drawable/ic_calendar" />
+</menu>

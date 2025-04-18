@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/apiFragment">
+
+    <fragment
+        android:id="@+id/apiFragment"
+        android:name="com.example.discovernasa.fragments.apifragments.ApiFragment"
+        android:label="fragment_api"
+        tools:layout="@layout/fragment_api" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/savesFragment"
+        android:name="com.example.discovernasa.fragments.SavesFragment"
+        android:label="fragment_saves"
+        tools:layout="@layout/fragment_saves" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.discovernasa.fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
+</navigation>

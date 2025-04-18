@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -45,10 +46,30 @@ dependencies {
         implementation(libs.material)
         implementation(libs.navigation.fragment.ktx)
         implementation(libs.navigation.ui.ktx)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-        androidTestImplementation(libs.androidx.junit)
+          implementation(libs.androidx.activity)
+            implementation(libs.androidx.constraintlayout)
+            testImplementation(libs.junit)
+
+    //Retrofit:
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter.gson)
+
+    //Picasso:
+    implementation(libs.picasso)
+
+    //Data Store:
+    implementation(libs.datastore.preferences)
+
+    //Room:
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    //Chips:
+    implementation(libs.material.v1110)
+
+
+    androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
 
 }
