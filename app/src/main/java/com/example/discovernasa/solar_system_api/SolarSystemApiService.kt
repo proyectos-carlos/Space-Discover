@@ -1,11 +1,11 @@
-package com.example.discovernasa.api
+package com.example.discovernasa.solar_system_api
 
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 // Interface to consume superhero API
-interface ApiService {
+interface SolarSystemApiService {
 
     // Get an specific body from an ID
     @GET("bodies/{id}")

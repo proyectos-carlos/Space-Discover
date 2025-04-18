@@ -6,7 +6,7 @@ import com.example.discovernasa.databinding.ItemBodyBinding
 import android.view.View
 import android.view.ViewGroup
 import com.example.discovernasa.R
-import com.example.discovernasa.api.BodiesDataResponse
+import com.example.discovernasa.solar_system_api.BodiesDataResponse
 
 class BodyAdapter(var bodiesList : List<BodiesDataResponse>) : RecyclerView.Adapter<BodyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BodyViewHolder {
@@ -37,6 +37,7 @@ class BodyViewHolder(view : View) : RecyclerView.ViewHolder(view){
         binding.tvName.text = body.englishName
         binding.tvType.text = body.bodyType
         binding.tvDiscoveryDate.text = body.discoveryDate
+//        binding.imageCelestialBody.setImageResource(TODO("Image"))
 
     }
 }

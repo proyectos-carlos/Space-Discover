@@ -8,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.discovernasa.Tools
-import com.example.discovernasa.api.ApiService
-import com.example.discovernasa.api.BodiesDataResponse
-import com.example.discovernasa.api.BodyType
+import com.example.discovernasa.solar_system_api.SolarSystemApiService
+import com.example.discovernasa.solar_system_api.BodiesDataResponse
+import com.example.discovernasa.solar_system_api.BodyType
 import com.example.discovernasa.databinding.FragmentApiBinding
+import com.example.discovernasa.solar_system_api.SolarSystemNetwork
+import com.example.discovernasa.solar_system_api.SolarSystemNetwork.getAllBodies
+import com.example.discovernasa.solar_system_api.SolarSystemNetwork.searchBodyById
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +28,6 @@ class ApiFragment : Fragment() {
 
 
     private lateinit var mBinding: FragmentApiBinding
-    private lateinit var retrofit: Retrofit
     private lateinit var adapter: BodyAdapter
     private var selectedTypes = mutableListOf<BodyType>()
 
@@ -39,28 +41,19 @@ class ApiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        retrofit = getRetrofit()
         renderUI()
         setupListeners()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.i("BigoReport", "All bodies be: ${getAllBodies()}")
-        }
+        updateList() // Add all elements when fragment is created
 
     }
 
     private fun renderUI() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val bodies = getAllBodies()
-            adapter = BodyAdapter(bodies ?: emptyList())
+            adapter = BodyAdapter(emptyList())
 
                 activity?.runOnUiThread{
                    mBinding.recyclerViewBody.adapter = adapter
                    mBinding.recyclerViewBody.layoutManager = LinearLayoutManager(context)
                 }
-        }
-
-
     }
 
     private fun setupListeners() {
@@ -97,6 +90,9 @@ class ApiFragment : Fragment() {
                    mBinding.chipPlanet -> selectedTypes.add(BodyType.PLANET)
                    mBinding.chipMoon -> selectedTypes.add(BodyType.MOON)
                    mBinding.chipStar -> selectedTypes.add(BodyType.STAR)
+                   mBinding.chipAsteroid -> selectedTypes.add(BodyType.ASTEROID)
+                   mBinding.chipComet -> selectedTypes.add(BodyType.COMET)
+                   mBinding.chipDwarfPlanet -> selectedTypes.add(BodyType.DWARF_PLANET)
                    else -> selectedTypes.add(BodyType.UNKNOWN)
            }
        }
@@ -110,7 +106,9 @@ class ApiFragment : Fragment() {
 
     //Update list whether chips are selected or query is sent
     private fun updateList() {
+
         val query = mBinding.searchViewBody.query.toString()
+        mBinding.progressBar.visibility = View.VISIBLE
 
         CoroutineScope(Dispatchers.IO).launch {
             //If query is empty, show all bodies
@@ -146,55 +144,11 @@ class ApiFragment : Fragment() {
                     adapter.updateList(filteredBodies)
 
                 } ?: run {
-                    Snackbar.make(mBinding.root, "Error en la consulta", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(mBinding.root, "No se encontraron resultados", Snackbar.LENGTH_SHORT).show()
                 }
+                mBinding.progressBar.visibility = View.GONE
             }
         }
 
     }
-
-
-    private fun getRetrofit() : Retrofit {
-        val retrofitConfig = Retrofit.Builder()
-            .baseUrl(Tools.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofitConfig
-    }
-
-    private suspend fun searchBodyById(query : String) : List<BodiesDataResponse>?{
-        return withContext(Dispatchers.IO){
-
-            val myResponse = retrofit.create(ApiService::class.java).getBodiesById(query)
-
-            if(!myResponse.isSuccessful || myResponse.body() == null){
-                Log.i("BigoReport", "La respuesta no funciona ${myResponse.body()}")
-                return@withContext null
-            }
-
-            val bodiesResult = myResponse.body()!!
-
-            Log.i("BigoReport", "El resultado es $bodiesResult")
-            if (bodiesResult.englishName.isBlank() && bodiesResult.bodyType.isBlank()) {
-                Log.i("BigoReport", "El cuerpo no se encontró, probablemente el ID es inválido")
-                return@withContext null
-            }
-
-            return@withContext listOf(bodiesResult)
-        }
-    }
-
-    private suspend fun getAllBodies() : List<BodiesDataResponse>?{
-          return withContext(Dispatchers.IO){
-              val myResponse = retrofit.create(ApiService::class.java).getAllBodies()
-              if(!myResponse.isSuccessful || myResponse.body() == null){
-                  Log.i("BigoReport", "La respuesta no funciona ${myResponse.body()}")
-                  return@withContext null
-              }
-              return@withContext myResponse.body()!!.bodies
-          }
-    }
-
-
-
 }

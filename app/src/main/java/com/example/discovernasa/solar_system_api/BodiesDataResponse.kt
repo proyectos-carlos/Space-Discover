@@ -1,4 +1,4 @@
-package com.example.discovernasa.api
+package com.example.discovernasa.solar_system_api
 
 import com.google.gson.annotations.SerializedName
 

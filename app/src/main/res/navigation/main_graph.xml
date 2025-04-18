@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/savesFragment"
-        android:name="com.example.discovernasa.fragments.SavesFragment"
+        android:name="com.example.discovernasa.fragments.savesfragments.SavesFragment"
         android:label="fragment_saves"
         tools:layout="@layout/fragment_saves" >
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.example.discovernasa.fragments.CalendarFragment"
+        android:name="com.example.discovernasa.fragments.calendarfragments.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
 </navigation>

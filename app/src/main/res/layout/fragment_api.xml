@@ -22,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:chipSpacing="8dp"
-        app:singleLine="true"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +31,7 @@
             android:id="@+id/chip_planet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Planet"
+            android:text="@string/planet"
             android:checkable="true"
             android:background="@color/black" />
 
@@ -40,14 +39,35 @@
             android:id="@+id/chip_moon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Moon"
+            android:text="@string/moon"
             android:checkable="true"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Star"
+            android:text="@string/star"
+            android:checkable="true"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_asteroid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/asteroid"
+            android:checkable="true"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_comet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comet"
+            android:checkable="true"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_dwarf_planet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dwarf_planet"
             android:checkable="true"/>
 
     </com.google.android.material.chip.ChipGroup>
@@ -56,12 +76,24 @@
         android:id="@+id/recyclerViewBody"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_body" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup"
-        android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_body"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,4 +5,10 @@
     <string name="menu_api">Search</string>
     <string name="menu_saved">Saved</string>
     <string name="menu_calendar">Near events</string>
+    <string name="planet">Planet</string>
+    <string name="moon">Moon</string>
+    <string name="star">Star</string>
+    <string name="asteroid">Asteroid</string>
+    <string name="comet">Comet</string>
+    <string name="dwarf_planet">Dwarf Planet</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.discovernasa.fragments
+package com.example.discovernasa.fragments.calendarfragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
