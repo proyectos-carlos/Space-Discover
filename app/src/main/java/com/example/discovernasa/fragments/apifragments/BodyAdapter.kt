@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.discovernasa.databinding.ItemBodyBinding
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.discovernasa.R
 import com.example.discovernasa.solar_system_api.BodiesDataResponse
 
@@ -35,9 +36,16 @@ class BodyViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
     fun render(body : BodiesDataResponse){
         binding.tvName.text = body.englishName
-        binding.tvType.text = body.bodyType
-        binding.tvDiscoveryDate.text = body.discoveryDate
-//        binding.imageCelestialBody.setImageResource(TODO("Image"))
+        binding.tvType.text = body.bodyType.ifBlank { "Unknown" }
+        binding.tvDiscoveryDate.text = body.discoveryDate.ifBlank { "Unknown" }
+
+        body.imageURL.let {
+            Glide.with(context).load(body.imageURL)
+                .circleCrop()
+                .into(binding.imageCelestialBody)
+        } ?: run {
+            //Not implemented
+        }
 
     }
 }

@@ -10,6 +10,8 @@ data class BodiesDataResponse(
     @SerializedName("discoveryDate") val discoveryDate : String,
     @SerializedName("avgTemp") val avgTemp : Int,
     @SerializedName("bodyType") val bodyType : String,
+    val imageURL : String? = null, //Extra param1 to wrap with wikipedia
+    val description : String? = null //Extra param2 to wrap with wikipedia
 ){
     val bodyTypeEnum: BodyType
         get() = BodyType.fromString(bodyType)

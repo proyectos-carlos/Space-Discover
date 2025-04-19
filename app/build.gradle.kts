@@ -68,6 +68,9 @@ dependencies {
     //Chips:
     implementation(libs.material.v1110)
 
+    //Glide:
+    implementation(libs.glide)
+    ksp(libs.compiler)
 
     androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
