@@ -47,6 +47,8 @@ class ApiFragment : Fragment() {
 
     }
 
+   
+
     private fun renderUI() {
             adapter = BodyAdapter(emptyList())
 

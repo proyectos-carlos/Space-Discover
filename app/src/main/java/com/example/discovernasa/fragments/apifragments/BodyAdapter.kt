@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.discovernasa.R
 import com.example.discovernasa.solar_system_api.BodiesDataResponse
+import com.example.discovernasa.solar_system_api.BodyType
 
 class BodyAdapter(var bodiesList : List<BodiesDataResponse>) : RecyclerView.Adapter<BodyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BodyViewHolder {
@@ -37,15 +38,27 @@ class BodyViewHolder(view : View) : RecyclerView.ViewHolder(view){
     fun render(body : BodiesDataResponse){
         binding.tvName.text = body.englishName
         binding.tvType.text = body.bodyType.ifBlank { "Unknown" }
-        binding.tvDiscoveryDate.text = body.discoveryDate.ifBlank { "Unknown" }
+        binding.tvDiscoveryDate.text =  "Discovered at: ${body.discoveryDate.ifBlank { "Unknown" }}"
 
-        body.imageURL.let {
-            Glide.with(context).load(body.imageURL)
-                .circleCrop()
-                .into(binding.imageCelestialBody)
-        } ?: run {
-            //Not implemented
+        when(body.bodyTypeEnum){
+            BodyType.PLANET -> addDrawable(R.drawable.ic_planet)
+            BodyType.MOON -> addDrawable(R.drawable.ic_moon)
+            BodyType.ASTEROID -> addDrawable(R.drawable.ic_asteroid)
+            BodyType.COMET -> addDrawable(R.drawable.ic_comet)
+            BodyType.STAR -> addDrawable(R.drawable.ic_sun)
+            BodyType.DWARF_PLANET -> addDrawable(R.drawable.ic_dwarf_planet)
+            BodyType.UNKNOWN -> addDrawable(R.drawable.ic_question_mark)
         }
-
     }
+
+    private fun addDrawable(imageResource : Int) = binding.imageCelestialBody.setImageResource(imageResource)
+
+
+//        body.imageURL.let {
+//            Glide.with(context).load(body.imageURL)
+//                .circleCrop()
+//                .into(binding.imageCelestialBody)
+//        } ?: run {
+//            //Not implemented
+//        }
 }

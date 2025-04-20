@@ -24,7 +24,7 @@
             android:layout_height="80dp"
             android:layout_marginEnd="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_compass" />
+            android:src="@drawable/ic_planet" />
 
         <!-- Columna de texto -->
         <LinearLayout

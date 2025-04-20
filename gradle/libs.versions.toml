@@ -1,6 +1,7 @@
 [versions]
 agp = "8.9.0"
 glide = "4.12.0"
+gridlayoutV7 = "28.0.0"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -20,6 +21,7 @@ ksp = "2.0.21-1.0.25"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -53,6 +55,10 @@ material-v1110 = { module = "com.google.android.material:material", version.ref 
 #Glide:
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+
+#Grid Layout:
+appcompat-v7 = { module = "com.android.support:appcompat-v7", version.ref = "gridlayoutV7" }
+gridlayout-v7 = { module = "com.android.support:gridlayout-v7", version.ref = "gridlayoutV7" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

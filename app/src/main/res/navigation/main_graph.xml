@@ -26,4 +26,16 @@
         android:name="com.example.discovernasa.fragments.calendarfragments.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
+
+
+    <fragment
+        android:id="@+id/bodyDetailFragment"
+        android:name="com.example.discovernasa.fragments.apifragments.DetailFragment"
+        android:label="Detalle del cuerpo"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="bodyId"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

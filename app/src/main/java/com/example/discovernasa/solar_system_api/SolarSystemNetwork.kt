@@ -47,7 +47,7 @@ object SolarSystemNetwork {
 
 
 
-            return@withContext setupBodiesWithWikipedia(listOf(bodiesResult))
+            return@withContext listOf(bodiesResult)
         }
     }
 
@@ -62,22 +62,20 @@ object SolarSystemNetwork {
 
             val bodiesResult = myResponse.body()!!.bodies
 
-            return@withContext setupBodiesWithWikipedia(bodiesResult)
+            return@withContext bodiesResult
         }
     }
 
     //Override the bodies with wikipedia data (URL image and description) if they are not null
-
-
     private suspend fun setupBodiesWithWikipedia(originalBodies : List<BodiesDataResponse>): List<BodiesDataResponse> =
         coroutineScope {
             originalBodies.map { body ->
                 async {
                     val wikiData = WikipediaNetwork.searchWikipediaArticle(body.englishName)
-                    wikiData?.let {
+                    wikiData?.let { wiki ->
                         body.copy(
-                            imageURL = it.thumbnail?.source ?: "",
-                            description = it.extract
+                            imageURL = wiki.thumbnail?.source ?: "",
+                            description = wiki.extract
                         )
                     } ?: body
                 }

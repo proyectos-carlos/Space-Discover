@@ -72,6 +72,13 @@ dependencies {
     implementation(libs.glide)
     ksp(libs.compiler)
 
+    //Safe args:
+
+
+//    //Grid Layout:
+//    implementation(libs.gridlayout.v7)
+//    implementation(libs.appcompat.v7)
+
     androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
 
