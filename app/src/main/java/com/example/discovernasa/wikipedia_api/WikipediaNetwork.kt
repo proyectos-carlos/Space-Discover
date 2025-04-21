@@ -33,15 +33,15 @@ object WikipediaNetwork{
             val myResponse = wikipediaApi.getSummary(query)
 
             if(!myResponse.isSuccessful || myResponse.body() == null){
-                Log.i("BigoReport", "La respuesta no funciona ${myResponse.body()}")
+                Log.i("BigoWikipedia", "La respuesta no funciona ${myResponse.body()}")
                 return@withContext null
             }
 
             val bodiesResult = myResponse.body()!!
 
-            Log.i("BigoReport", "El resultado es $bodiesResult")
+            Log.i("BigoWikipedia", "El resultado es $bodiesResult")
             if (bodiesResult.thumbnail == null && bodiesResult.title.isBlank()) {
-                Log.i("BigoReport", "No se encontró el artículo de wikipedia para $query")
+                Log.i("BigoWikipedia", "No se encontró el artículo de wikipedia para $query")
                 return@withContext null
             }
 

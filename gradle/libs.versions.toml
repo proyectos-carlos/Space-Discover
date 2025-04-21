@@ -13,6 +13,7 @@ materialVersion = "1.12.0"
 navigation = "2.8.9"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
+navigationSafeArgsGradlePlugin = "2.4.2-alpha09"
 retrofit = "2.9.0"
 picasso = "2.8"
 datastore = "1.1.4"
@@ -59,6 +60,7 @@ compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide
 #Grid Layout:
 appcompat-v7 = { module = "com.android.support:appcompat-v7", version.ref = "gridlayoutV7" }
 gridlayout-v7 = { module = "com.android.support:gridlayout-v7", version.ref = "gridlayoutV7" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

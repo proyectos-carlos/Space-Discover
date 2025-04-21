@@ -33,15 +33,15 @@ object SolarSystemNetwork {
             val myResponse = solarSystemApi.getBodiesById(query)
 
             if(!myResponse.isSuccessful || myResponse.body() == null){
-                Log.i("BigoReport", "La respuesta no funciona ${myResponse.body()}")
+                Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.body()}")
                 return@withContext null
             }
 
             val bodiesResult = myResponse.body()!!
 
-            Log.i("BigoReport", "El resultado es $bodiesResult")
+            Log.i("BigoSolarSystem", "El resultado es $bodiesResult")
             if (bodiesResult.englishName.isBlank() && bodiesResult.bodyType.isBlank()) {
-                Log.i("BigoReport", "El cuerpo no se encontró, probablemente el ID es inválido")
+                Log.i("BigoSolarSystem", "El cuerpo no se encontró, probablemente el ID es inválido")
                 return@withContext null
             }
 
@@ -56,7 +56,7 @@ object SolarSystemNetwork {
         return withContext(Dispatchers.IO){
             val myResponse = solarSystemApi.getAllBodies()
             if(!myResponse.isSuccessful || myResponse.body() == null){
-                Log.i("BigoReport", "La respuesta no funciona ${myResponse.body()}")
+                Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.body()}")
                 return@withContext null
             }
 
@@ -66,8 +66,47 @@ object SolarSystemNetwork {
         }
     }
 
-    //Override the bodies with wikipedia data (URL image and description) if they are not null
-    private suspend fun setupBodiesWithWikipedia(originalBodies : List<BodiesDataResponse>): List<BodiesDataResponse> =
+    suspend fun getDetailBodyById(query : String) : DetailBodiesDataResponse?{
+
+        return withContext(Dispatchers.IO){
+
+            val myResponse = solarSystemApi.getDetailedBodyById(query)
+
+            if(!myResponse.isSuccessful || myResponse.body() == null){
+                Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.body()}")
+                return@withContext null
+            }
+
+            val bodyResult = setupBodyWithWikipedia(myResponse.body()!!)
+            Log.i("BigoSolarSystem", "El resultado es $bodyResult")
+
+            if (bodyResult.englishName.isBlank() && bodyResult.bodyType.isBlank()) {
+                Log.i("BigoSolarSystem", "El cuerpo no se encontró, probablemente el ID es inválido")
+                return@withContext null
+            }
+
+
+            return@withContext bodyResult
+        }
+    }
+
+    //Override a body with wikipedia data
+    private suspend fun setupBodyWithWikipedia(originalBody : DetailBodiesDataResponse) :DetailBodiesDataResponse {
+                // Search with bodyType to avoid errors with some bodies I.E: Kale moon
+                val wikiData = WikipediaNetwork
+                    .searchWikipediaArticle(originalBody.englishName)
+
+                return wikiData?.let { wiki ->
+                    originalBody.copy(
+                        imageURL = wiki.thumbnail?.source ?: "",
+                        description = wiki.extract
+                    )
+                } ?: originalBody
+    }
+
+
+    //Override the bodies with wikipedia data (URL image and description) if they are not null. (May take a while for all)
+    private suspend fun setupBodiesWithWikipedia(originalBodies : List<DetailBodiesDataResponse>): List<DetailBodiesDataResponse> =
         coroutineScope {
             originalBodies.map { body ->
                 async {

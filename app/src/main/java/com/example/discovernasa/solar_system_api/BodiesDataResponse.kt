@@ -2,7 +2,20 @@ package com.example.discovernasa.solar_system_api
 
 import com.google.gson.annotations.SerializedName
 
+//API response classes for general purpose
 data class BodiesDataResponse(
+    @SerializedName("id") val id : String,
+    @SerializedName("englishName") val englishName : String,
+    @SerializedName("discoveryDate") val discoveryDate : String,
+    @SerializedName("bodyType") val bodyType : String,
+){
+    val bodyTypeEnum: BodyType
+        get() = BodyType.fromString(bodyType)
+}
+
+
+//API response for detail purpose
+data class DetailBodiesDataResponse(
     @SerializedName("id") val id : String,
     @SerializedName("englishName") val englishName : String,
     @SerializedName("gravity") val gravity : Double,
@@ -16,6 +29,7 @@ data class BodiesDataResponse(
     val bodyTypeEnum: BodyType
         get() = BodyType.fromString(bodyType)
 }
+
 
 enum class BodyType {
         PLANET,

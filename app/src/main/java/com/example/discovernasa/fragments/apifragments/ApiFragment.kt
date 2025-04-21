@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.discovernasa.R
 import com.example.discovernasa.Tools
 import com.example.discovernasa.solar_system_api.SolarSystemApiService
 import com.example.discovernasa.solar_system_api.BodiesDataResponse
@@ -47,15 +50,17 @@ class ApiFragment : Fragment() {
 
     }
 
-   
-
     private fun renderUI() {
-            adapter = BodyAdapter(emptyList())
+            adapter = BodyAdapter(bodiesList =  emptyList(), onItemSelected = { id -> navigateToDetail(id) } )
 
                 activity?.runOnUiThread{
                    mBinding.recyclerViewBody.adapter = adapter
                    mBinding.recyclerViewBody.layoutManager = LinearLayoutManager(context)
                 }
+    }
+
+    private fun navigateToDetail(id : String){
+        findNavController().navigate(ApiFragmentDirections.actionApiFragmentToBodyDetailFragment(bodyId = id))
     }
 
     private fun setupListeners() {

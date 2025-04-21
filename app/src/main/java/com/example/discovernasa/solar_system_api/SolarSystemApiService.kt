@@ -11,7 +11,12 @@ interface SolarSystemApiService {
     @GET("bodies/{id}")
     suspend fun getBodiesById(@Path("id") bodyId: String) : Response<BodiesDataResponse>
 
+    // Get all the bodies
     @GET("bodies/")
     suspend fun getAllBodies() : Response<BodiesDataList>
+
+    // Get a detailed body from an ID
+    @GET("bodies/{id}")
+    suspend fun getDetailedBodyById(@Path("id") bodyId: String) : Response<DetailBodiesDataResponse>
 
 }

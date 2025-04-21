@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -72,8 +73,8 @@ dependencies {
     implementation(libs.glide)
     ksp(libs.compiler)
 
-    //Safe args:
-
+//    //Safe args:
+//    implementation(libs.navigation.safe.args.gradle.plugin)
 
 //    //Grid Layout:
 //    implementation(libs.gridlayout.v7)
