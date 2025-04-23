@@ -16,10 +16,6 @@
             app:destination="@id/bodyDetailFragment"
             app:enterAnim="@animator/nav_default_enter_anim"
             app:exitAnim="@animator/nav_default_exit_anim"/>
-        <argument
-            android:name="bodyID"
-            app:argType="string" />
-
     </fragment>
 
     <fragment
@@ -43,8 +39,13 @@
         android:label="Detalle del cuerpo"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="bodyId"
-            app:argType="string" />
+            android:name="bodyID"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="detailAction"
+            app:argType="com.example.discovernasa.fragments.apifragments.DetailAction"
+            app:nullable="false"/>
     </fragment>
 
 </navigation>

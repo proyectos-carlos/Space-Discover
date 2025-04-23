@@ -18,17 +18,31 @@ data class BodiesDataResponse(
 data class DetailBodiesDataResponse(
     @SerializedName("id") val id : String,
     @SerializedName("englishName") val englishName : String,
-    @SerializedName("gravity") val gravity : Double,
     @SerializedName("discoveredBy") val discoveredBy : String,
     @SerializedName("discoveryDate") val discoveryDate : String,
     @SerializedName("avgTemp") val avgTemp : Int,
     @SerializedName("bodyType") val bodyType : String,
+    @SerializedName("density") val density : Double,
+    @SerializedName("gravity") val gravity : Double,
+    @SerializedName("escape") val escape : Double,
+    @SerializedName("meanRadius") val meanRadius : Double,
+    @SerializedName("semimajorAxis") val semimajorAxis : Double,
+    @SerializedName("sideralOrbit") val sideralOrbit : Double,
+    @SerializedName("sideralRotation") val sideralRotation : Double,
+    @SerializedName("polarRadius") val polarRadius : Double,
+    @SerializedName("aphelion") val aphelion : Double,
+    @SerializedName("moons") val moons : List<Moon>?,
     val imageURL : String? = null, //Extra param1 to wrap with wikipedia
     val description : String? = null //Extra param2 to wrap with wikipedia
 ){
     val bodyTypeEnum: BodyType
         get() = BodyType.fromString(bodyType)
 }
+
+data class Moon(
+    @SerializedName("moon") val moon : String,
+    @SerializedName("rel") val rel : String
+)
 
 
 enum class BodyType {

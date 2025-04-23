@@ -60,7 +60,8 @@ class ApiFragment : Fragment() {
     }
 
     private fun navigateToDetail(id : String){
-        findNavController().navigate(ApiFragmentDirections.actionApiFragmentToBodyDetailFragment(bodyId = id))
+        findNavController().navigate(ApiFragmentDirections.actionApiFragmentToBodyDetailFragment
+            (bodyID = id, detailAction = DetailAction.LOAD_FROM_API))
     }
 
     private fun setupListeners() {
@@ -118,18 +119,25 @@ class ApiFragment : Fragment() {
         mBinding.progressBar.visibility = View.VISIBLE
 
         CoroutineScope(Dispatchers.IO).launch {
-            //If query is empty, show all bodies
-            val bodies = if(query.isBlank()) getAllBodies() else searchBodyById(query)
+
+            //Get bodies depending if query is blank or not. Get empty list if no bodies were found
+            val bodies: List<BodiesDataResponse> = if (query.isBlank()) {
+                getAllBodies() ?: emptyList()
+            } else {
+                searchBodyById(query)?.let { listOf(it) } ?: emptyList()
+            }
+
 
             activity?.runOnUiThread {
 
+                //If no bodies were found (most likely because the ID in search view is invalid), show a snackbar
+                if(bodies.isEmpty()){
+                    Snackbar.make(mBinding.root, "No se encontraron resultados de $query", Snackbar.LENGTH_SHORT).show()
+                    mBinding.progressBar.visibility = View.GONE
+                    return@runOnUiThread
+                }
 
-                bodies?.let { it ->
-                    //If no bodies were found (most likely because the ID in search view is invalid), show a snackbar)
-                    if(it.isEmpty()){
-                        Snackbar.make(mBinding.root, "No se encontraron resultados de $query", Snackbar.LENGTH_SHORT).show()
-                        return@let
-                    }
+                bodies.let { it ->
 
                     Log.i("BigoReport", "Current list $it")
                     // If no types are selected, not filter any bodies at all
@@ -150,8 +158,6 @@ class ApiFragment : Fragment() {
                     Log.i("BigoReport", "Current list filtered $filteredBodies")
                     adapter.updateList(filteredBodies)
 
-                } ?: run {
-                    Snackbar.make(mBinding.root, "No se encontraron resultados", Snackbar.LENGTH_SHORT).show()
                 }
                 mBinding.progressBar.visibility = View.GONE
             }

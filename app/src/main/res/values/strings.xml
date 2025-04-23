@@ -16,4 +16,6 @@
     <string name="asteroid_plural">Asteroids</string>
     <string name="star_plural">Star</string>
     <string name="dwarf_planet_plural">Dwarf Planets</string>
+    <string name="technical_data">Technical Data</string>
+    <string name="no_description">No description available for this body</string>
 </resources>

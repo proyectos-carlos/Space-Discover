@@ -1,14 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.apifragments.DetailFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<ScrollView
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:divider="?android:attr/dividerHorizontal"
+        android:dividerPadding="8dp">
+
+        <!-- Image -->
+        <ImageView
+            android:id="@+id/bodyImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp" />
+
+
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            tools:text="Name: asda"
+            android:layout_marginVertical="16dp"/>
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvBodyDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:paddingBottom="16dp"
+            android:textColor="#555"
+            android:gravity="center"
+            tools:text="Esta es la descripcion del body, este body se trata de x, y, z"/>
+
+        <!-- Key Info -->
+
+
+        <TextView
+            android:id="@+id/tvBodyType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            tools:text="BodyType"
+            android:layout_marginVertical="8dp"/>
+
+        <TextView
+            android:id="@+id/tvDiscoveredBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:paddingTop="4dp"
+            android:layout_marginVertical="8dp"
+            tools:text="Discovered By"/>
+
+        <TextView
+            android:id="@+id/tvDiscoveryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:paddingBottom="8dp"
+            android:layout_marginVertical="8dp"
+            tools:text="Discovery Date"
+            />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCC"
+            android:layout_marginVertical="8dp" />
+
+        <!-- Technical Data Title -->
+        <TextView
+            android:id="@+id/tvTechnicalDataTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/technical_data"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Here go all your technical attributes -->
+        <TextView
+            android:id="@+id/tvAvgTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avg Temp: -" />
+
+        <TextView
+            android:id="@+id/tvDensity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Density: -" />
+
+        <TextView
+            android:id="@+id/tvGravity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gravity: -" />
+
+
+        <TextView
+            android:id="@+id/tvEscape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Escape Velocity: -" />
+
+        <TextView
+            android:id="@+id/tvMeanRadius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mean Radius: -" />
+
+        <TextView
+            android:id="@+id/tvSemimajorAxis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Semi-major Axis: -" />
+
+        <TextView
+            android:id="@+id/tvSideralOrbit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sidereal Orbit: -" />
+
+        <TextView
+            android:id="@+id/tvSideralRotation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sidereal Rotation: -" />
+
+        <TextView
+            android:id="@+id/tvPolarRadius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Polar Radius: -" />
+
+        <TextView
+            android:id="@+id/tvAphelion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aphelion: -" />
+
+
+        <!-- Moons -->
+        <TextView
+            android:id="@+id/tvMoons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Moons: -"
+            android:paddingTop="16dp"
+            android:textStyle="italic" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMoons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            />
+
+    </LinearLayout>
+</ScrollView>
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonSaveBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add" />
 
 </FrameLayout>
