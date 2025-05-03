@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <!-- res/values/colors_light.xml -->
+    <color name="background_apod">#FFFFFF</color>
+    <color name="main_color_apod">#202020</color> <!-- Casi negro para textos -->
+    <color name="second_color_apod">#6D6D6D</color> <!-- Gris medio -->
+    <color name="accent_color_apod">#00796B</color> <!-- Verde elegante -->
+    <color name="button_background">#E0F2F1</color> <!-- Verde menta muy claro -->
+    <color name="button_text">#004D40</color>
+
+
 </resources>

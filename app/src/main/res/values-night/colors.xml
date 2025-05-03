@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <!-- Fondo principal oscuro para la pantalla APOD -->
+        <color name="background_apod">#121212</color>
+
+        <!-- Color principal para texto (descripción, título) -->
+        <color name="main_color_apod">#F1F1F1</color>
+
+        <!-- Color secundario para fecha y copyright -->
+        <color name="second_color_apod">#B0B0B0</color>
+
+        <!-- Color de acento si se quiere usar en algún detalle -->
+        <color name="accent_color_apod">#03DAC5</color>
+
+        <!-- Fondo del botón con gradiente (definido por drawable, pero opcional si quieres usar directamente un color plano) -->
+        <color name="button_background">#263238</color> <!-- Por si algún fondo necesita fallback -->
+
+        <!-- Color del texto de los botones -->
+        <color name="button_text">#E0F7FA</color>
+
+</resources>

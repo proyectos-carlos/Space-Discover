@@ -18,4 +18,20 @@
     <string name="dwarf_planet_plural">Dwarf Planets</string>
     <string name="technical_data">Technical Data</string>
     <string name="no_description">No description available for this body</string>
+    <string name="no_moons">This body has no moons</string>
+
+
+    <!-- Strings with placeholders -->
+    <string name="total_moons">This body has %1$d moons</string>
+    <string name="saved_body">%1$s was succesfully saved</string>
+    <string name="error_load_apod">Astronomy picture of the day couldn\'t load :(</string>
+    <string name="no_copyright">Unknown author</string>
+    <string name="no_apod_date">No date available</string>
+    <string name="no_apod_explanation">No description available for this day</string>
+    <string name="favorite_apod">Mark as favorite</string>
+    <string name="apod_saved">Astronomic picture of the day saved</string>
+    <string name="go_to_saved_apod">See favorites</string>
+    <string name="loading_moons">Loading moons...</string>
+    <string name="search_moons">Search for a specefic moon</string>
+    <string name="filter_chip">Filter by categories:</string>
 </resources>

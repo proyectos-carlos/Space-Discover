@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.apifragments.ApiFragment"
     android:id="@+id/apiFragment"
     android:padding="8dp">
 
@@ -16,6 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
@@ -33,42 +34,48 @@
             android:layout_height="wrap_content"
             android:text="@string/planet"
             android:checkable="true"
-            android:background="@color/black" />
+            android:background="@color/black"
+            app:checkedIcon="@drawable/ic_planet"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_moon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/moon"
-            android:checkable="true"/>
+            android:checkable="true"
+            app:checkedIcon="@drawable/ic_moon"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/star"
-            android:checkable="true"/>
+            android:checkable="true"
+            app:checkedIcon="@drawable/ic_sun"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_asteroid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/asteroid"
-            android:checkable="true"/>
+            android:checkable="true"
+            app:checkedIcon="@drawable/ic_asteroid"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_comet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comet"
-            android:checkable="true"/>
+            android:checkable="true"
+            app:checkedIcon="@drawable/ic_comet"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_dwarf_planet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dwarf_planet"
-            android:checkable="true"/>
+            android:checkable="true"
+            app:checkedIcon="@drawable/ic_dwarf_planet"/>
 
     </com.google.android.material.chip.ChipGroup>
 

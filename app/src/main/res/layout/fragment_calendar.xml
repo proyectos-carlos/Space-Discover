@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/apod_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.calendarfragments.CalendarFragment">
+    android:padding="16dp"
+    android:background="@color/background_apod">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment calendar" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/apod_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Imagen APOD -->
+        <ImageView
+            android:id="@+id/apodImageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvApodTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/title_apod"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            tools:text="Mercury" />
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/tvApodDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/description_apod"
+            android:padding="16dp"/>
+
+        <!-- Fecha -->
+        <TextView
+            android:id="@+id/tvApodDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/date_apod"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Autor -->
+        <TextView
+            android:id="@+id/tvApodCopyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/copyright_apod"
+            android:paddingHorizontal="16dp"
+            android:layout_marginBottom="16dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/apod_button"
+            android:id="@+id/buttonFavorite"
+            android:text="@string/favorite_apod" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/apod_button"
+            android:id="@+id/buttonGoToFavorite"
+            android:text="@string/go_to_saved_apod" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/purple_500"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+</ScrollView>

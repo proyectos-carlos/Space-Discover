@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/apiFragment"
-        android:name="com.example.discovernasa.fragments.apifragments.ApiFragment"
+        android:name="com.example.solarsystemapp.fragments.apifragments.ApiFragment"
         android:label="fragment_api"
         tools:layout="@layout/fragment_api" >
 
@@ -20,32 +20,96 @@
 
     <fragment
         android:id="@+id/savesFragment"
-        android:name="com.example.discovernasa.fragments.savesfragments.SavesFragment"
+        android:name="com.example.solarsystemapp.fragments.savesfragments.SavesFragment"
         android:label="fragment_saves"
         tools:layout="@layout/fragment_saves" >
+
+        <action
+            android:id="@+id/action_savesFragment_to_savesCategoryFragment"
+            app:destination="@id/savesCategoryFragment" />
+
 
     </fragment>
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.example.discovernasa.fragments.calendarfragments.CalendarFragment"
+        android:name="com.example.solarsystemapp.fragments.calendarfragments.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_savedApodFragment"
+            app:destination="@id/savedApodFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"/>
+    </fragment>
 
 
     <fragment
         android:id="@+id/bodyDetailFragment"
-        android:name="com.example.discovernasa.fragments.apifragments.DetailFragment"
+        android:name="com.example.solarsystemapp.fragments.apifragments.DetailFragment"
         android:label="Detalle del cuerpo"
         tools:layout="@layout/fragment_detail">
+
+
+        <action
+            android:id="@+id/action_bodyDetailFragment_to_self"
+            app:destination="@id/bodyDetailFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"/>
+
+        <action
+            android:id="@+id/action_bodyDetailFragment_to_savesCategoryFragment"
+            app:destination="@id/savesCategoryFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"/>
+
+        <action
+            android:id="@+id/action_bodyDetailFragment_to_savesFragment"
+            app:destination="@id/savesFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"/>
+
+
+
         <argument
             android:name="bodyID"
             app:argType="string"
             app:nullable="false"/>
         <argument
             android:name="detailAction"
-            app:argType="com.example.discovernasa.fragments.apifragments.DetailAction"
+            app:argType="com.example.solarsystemapp.fragments.apifragments.DetailAction"
             app:nullable="false"/>
     </fragment>
+
+
+
+
+    <fragment
+        android:id="@+id/savesCategoryFragment"
+        android:name="com.example.solarsystemapp.fragments.savesfragments.SavesCategoryFragment"
+        android:label="fragment_saves_category"
+        tools:layout="@layout/fragment_saves_category" >
+
+
+        <argument
+            android:name="loadCategoryAction"
+            app:argType="com.example.solarsystemapp.fragments.savesfragments.CategoryAction"
+            app:nullable="false"/>
+
+        <action
+            android:id="@+id/action_savesCategoryFragment_to_bodyDetailFragment"
+            app:destination="@id/bodyDetailFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/savedApodFragment"
+        android:name="com.example.solarsystemapp.fragments.calendarfragments.SavedApodFragment"
+        android:label="fragment_saved_apod"
+        tools:layout="@layout/fragment_saved_apod" />
+
 
 </navigation>
