@@ -34,4 +34,25 @@
     <string name="loading_moons">Loading moons...</string>
     <string name="search_moons">Search for a specefic moon</string>
     <string name="filter_chip">Filter by categories:</string>
+    <string name="settings">Settings\n</string>
+
+
+
+    <string name="avg_temp">Average temperature: %1$.0f K</string>
+    <string name="density">Density: %1$.2f g/cm³</string>
+    <string name="gravity">Gravity: %1$.2f m/s²</string>
+    <string name="escape">Escape velocity: %1$.0f m/s</string>
+    <string name="mean_radius">Mean radius: %1$.0f km</string>
+    <string name="semimajor_axis">Semimajor axis: %1$.0f km</string>
+    <string name="sideral_orbit">Sidereal orbit: %1$.1f days</string>
+    <string name="sideral_rotation">Sidereal rotation: %1$.1f hours</string>
+    <string name="polar_radius">Polar radius: %1$.0f km</string>
+    <string name="aphelion">Aphelion: %1$.0f km</string>
+
+    <!-- Unknown -->
+    <string name="unknown">Unknown</string>
+    <string name="comet_plural">Comets</string>
+    <string name="filtered_moons">Filtered moons: %1$d</string>
+    <string name="search_body">Search for a body I.E: Mars</string>
+
 </resources>

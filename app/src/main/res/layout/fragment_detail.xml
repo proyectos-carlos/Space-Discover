@@ -51,6 +51,7 @@
             android:paddingBottom="16dp"
             android:textColor="#555"
             android:gravity="center"
+            android:lineSpacingExtra="6dp"
             tools:text="Esta es la descripcion del body, este body se trata de x, y, z"/>
 
         <!-- Key Info -->
@@ -106,63 +107,79 @@
             android:id="@+id/tvAvgTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Avg Temp: -" />
+            android:text="Avg Temp: -"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/tvDensity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Density: -" />
+            android:text="Density: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvGravity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gravity: -" />
+            android:text="Gravity: -"
+            android:layout_marginBottom="8dp"/>
 
 
         <TextView
             android:id="@+id/tvEscape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Escape Velocity: -" />
+            android:text="Escape Velocity: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvMeanRadius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mean Radius: -" />
+            android:text="Mean Radius: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvSemimajorAxis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Semi-major Axis: -" />
+            android:text="Semi-major Axis: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvSideralOrbit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sidereal Orbit: -" />
+            android:text="Sidereal Orbit: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvSideralRotation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sidereal Rotation: -" />
+            android:text="Sidereal Rotation: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvPolarRadius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Polar Radius: -" />
+            android:text="Polar Radius: -"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvAphelion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aphelion: -" />
+            android:text="Aphelion: -"
+            android:layout_marginBottom="8dp"/>
 
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCC"
+            android:layout_marginVertical="8dp" />
 
         <!-- Moons -->
         <TextView
@@ -176,13 +193,26 @@
             android:textStyle="italic" />
 
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchViewMoons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="16dp"
             android:hint="@string/search_moons"
             android:visibility="gone"/>
+
+
+        <TextView
+            android:id="@+id/tvFilteredMoons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            tools:text="BodyType"
+            android:layout_marginVertical="8dp"
+            android:visibility="gone"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMoons"
             android:layout_width="match_parent"

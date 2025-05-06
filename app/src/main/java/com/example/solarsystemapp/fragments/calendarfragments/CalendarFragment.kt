@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.example.discovernasa.R
 import com.example.discovernasa.databinding.FragmentCalendarBinding
 import com.example.solarsystemapp.nasa_api.ApodDataResponse
@@ -75,13 +76,15 @@ class CalendarFragment : Fragment() {
 
 
     private fun renderUI(apodResponse : ApodDataResponse){
+
         with(mBinding){
             if(apodResponse.media_type == "image"){
                 Glide.with(requireContext())
                     .load(apodResponse.hdurl ?: apodResponse.url)
                     .centerCrop()
-                    .placeholder(R.drawable.ic_question_mark)
-                    .into(apodImageView)
+                    .placeholder(R.drawable.ic_image_static)
+                    .error(R.drawable.ic_skull)
+                    .into(mBinding.apodImageView)
             }
 
             tvApodTitle.text = apodResponse.title

@@ -66,12 +66,18 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
-    //Chips:
+    //Chips
     implementation(libs.material.v1110)
 
     //Glide:
     implementation(libs.glide)
     ksp(libs.compiler)
+
+    //Data store:
+    implementation (libs.androidx.datastore.preferences.v113)
+
+    //Splash Screen:
+
 
 //    //Safe args:
 //    implementation(libs.navigation.safe.args.gradle.plugin)

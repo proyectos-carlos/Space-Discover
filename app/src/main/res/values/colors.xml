@@ -17,5 +17,25 @@
     <color name="button_background">#E0F2F1</color> <!-- Verde menta muy claro -->
     <color name="button_text">#004D40</color>
 
+    <!-- for body item in recyclerview -->
+    <color name="background_card_body">#FFFFFF</color>
+    <color name="text_primary_body">#212121</color>
+    <color name="text_secondary_body">#666666</color>
+    <color name="text_accent_body">#1E88E5</color>
+    <color name="ripple_color_body">#1E88E533</color>
+
+
+    <!-- API FRAGMENT -->
+    <color name="background_fragment_api">#FAFAFA</color>
+    <color name="chip_background">#E0F7FA</color>
+    <color name="chip_text">#006064</color>
+    <color name="chip_checked">#0097A7</color>
+    <color name="search_background">#FFFFFF</color>
+    <color name="search_hint">#9E9E9E</color>
+
+
+    <!-- Splash Screen -->
+    <color name="splash_screen">#011940</color>
+
 
 </resources>

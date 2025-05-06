@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.discovernasa.R
 import com.example.discovernasa.databinding.FragmentSavesCategoryBinding
 import com.example.solarsystemapp.fragments.apifragments.BodyAdapter
 import com.example.solarsystemapp.fragments.apifragments.DetailAction
@@ -49,28 +50,22 @@ class SavesCategoryFragment : Fragment() {
     private fun renderUI(action: CategoryAction) {
          CoroutineScope(Dispatchers.IO).launch {
              val bodies = when(action){
-                 CategoryAction.LOAD_PLANETS -> {
+                 CategoryAction.LOAD_PLANETS -> DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Planet")
 
-                     DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Planet")
-                 }
-                 CategoryAction.LOAD_MOONS -> {
-                     DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Moon")
-                 }
-                 CategoryAction.LOAD_ASTEROIDS -> {
-                     DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Asteroid")
-                 }
-                 CategoryAction.LOAD_COMETS -> {
-                     DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Comet")
-                 }
-                 CategoryAction.LOAD_STARS -> {
-                     DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Star")
-                 }
-                 CategoryAction.LOAD_DWARF_PLANETS -> {
-                     DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Dwarf Planet")
-                 }
+                 CategoryAction.LOAD_MOONS -> DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Moon")
+
+                 CategoryAction.LOAD_ASTEROIDS -> DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Asteroid")
+
+                 CategoryAction.LOAD_COMETS -> DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Comet")
+
+                 CategoryAction.LOAD_STARS -> DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Star")
+
+                 CategoryAction.LOAD_DWARF_PLANETS -> DatabaseInit.localDataDatabase.getBodyDao().getBodiesByType("Dwarf Planet")
+
              }.map { it.toBodyDataResponse() }
 
              requireActivity().runOnUiThread {
+                 renderTopImage(action)
                  mBinding.recyclerViewSaved.adapter = BodyAdapter(bodies,  onItemSelected = { id -> navigateToDetail(id) } )
                  mBinding.recyclerViewSaved.layoutManager = LinearLayoutManager(requireContext())
              }
@@ -83,5 +78,16 @@ class SavesCategoryFragment : Fragment() {
             bodyID = id,
             detailAction = DetailAction.LOAD_FROM_DATABASE
         ))
+    }
+
+    private fun renderTopImage(action: CategoryAction){
+        when(action){
+            CategoryAction.LOAD_PLANETS -> mBinding.imageViewCategory.setImageResource(R.drawable.ic_planet)
+            CategoryAction.LOAD_MOONS -> mBinding.imageViewCategory.setImageResource(R.drawable.ic_moon)
+            CategoryAction.LOAD_ASTEROIDS -> mBinding.imageViewCategory.setImageResource(R.drawable.ic_asteroid)
+            CategoryAction.LOAD_COMETS -> mBinding.imageViewCategory.setImageResource(R.drawable.ic_comet)
+            CategoryAction.LOAD_STARS -> mBinding.imageViewCategory.setImageResource(R.drawable.ic_sun)
+            CategoryAction.LOAD_DWARF_PLANETS -> mBinding.imageViewCategory.setImageResource(R.drawable.ic_dwarf_planet)
+        }
     }
 }

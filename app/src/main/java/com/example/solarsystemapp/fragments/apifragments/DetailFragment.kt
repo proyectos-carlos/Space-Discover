@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +36,7 @@ class DetailFragment : Fragment() {
     private lateinit var mBinding : FragmentDetailBinding
     private val args : DetailFragmentArgs by navArgs()
     private lateinit var moonsAdapter : BodyAdapter
-
+    private val moonsList = mutableListOf<BodiesDataResponse>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,7 +81,10 @@ class DetailFragment : Fragment() {
                         DetailAction.LOAD_FROM_API -> SolarSystemNetwork.getAllMoons(body?.moons ?: emptyList())
                         DetailAction.LOAD_FROM_DATABASE -> emptyList()
                     }
-                    requireActivity().runOnUiThread { renderMoons(moons) }
+                    requireActivity().runOnUiThread {
+                        renderMoons(moons)
+                        setupMoonListeners(moons)
+                    }
                 }
             }
         }
@@ -108,7 +113,8 @@ class DetailFragment : Fragment() {
                 .load(body.imageURL)
                 .centerCrop()
                 .circleCrop()
-                .placeholder(R.drawable.ic_question_mark)
+                .placeholder(R.drawable.ic_image_static)
+                .error(R.drawable.ic_skull)
                 .into(mBinding.bodyImage)
 
             tvBodyDescription.text = body.description ?: getString(R.string.no_description)
@@ -121,17 +127,16 @@ class DetailFragment : Fragment() {
 
 
             // Technical Data
-            tvAvgTemp.text = "Temperatura promedio: ${body.avgTemp} K"
-            tvDensity.text = "Densidad: ${body.density} g/cm³"
-            tvGravity.text = "Gravedad: ${body.gravity} m/s²"
-            tvEscape.text = "Velocidad escape: ${body.escape} m/s"
-            tvMeanRadius.text = "Radio medio: ${body.meanRadius} km"
-            tvSemimajorAxis.text = "Eje semi mayor: ${body.semimajorAxis} km"
-            tvSideralOrbit.text = "Órbita sideral: ${body.sideralOrbit} días"
-            tvSideralRotation.text = "Rotación sideral: ${body.sideralRotation} horas"
-            tvPolarRadius.text = "Radio polar: ${body.polarRadius} km"
-            tvAphelion.text = "Afelio: ${body.aphelion} km"
-
+            tvAvgTemp.text = formatValueOrHide(body.avgTemp.toDouble(), R.string.avg_temp, tvAvgTemp)
+            tvDensity.text = formatValueOrHide(body.density, R.string.density, tvDensity)
+            tvGravity.text = formatValueOrHide(body.gravity, R.string.gravity, tvGravity)
+            tvEscape.text = formatValueOrHide(body.escape, R.string.escape, tvEscape)
+            tvMeanRadius.text = formatValueOrHide(body.meanRadius, R.string.mean_radius, tvMeanRadius)
+            tvSemimajorAxis.text = formatValueOrHide(body.semimajorAxis, R.string.semimajor_axis, tvSemimajorAxis)
+            tvSideralOrbit.text = formatValueOrHide(body.sideralOrbit, R.string.sideral_orbit, tvSideralOrbit)
+            tvSideralRotation.text = formatValueOrHide(body.sideralRotation, R.string.sideral_rotation, tvSideralRotation)
+            tvPolarRadius.text = formatValueOrHide(body.polarRadius, R.string.polar_radius, tvPolarRadius)
+            tvAphelion.text = formatValueOrHide(body.aphelion, R.string.aphelion, tvAphelion)
 
         }
     }
@@ -145,6 +150,9 @@ class DetailFragment : Fragment() {
         mBinding.tvMoons.text = getString(R.string.total_moons, moons.size)
         mBinding.recyclerViewMoons.visibility = View.VISIBLE
         mBinding.searchViewMoons.visibility = View.VISIBLE
+        mBinding.tvFilteredMoons.visibility = View.VISIBLE
+        mBinding.tvFilteredMoons.text = getString(R.string.filtered_moons, moons.size)
+
 
         moonsAdapter = BodyAdapter(bodiesList =  moons, onItemSelected = { id -> navigateToDetail(id) } )
 
@@ -152,14 +160,43 @@ class DetailFragment : Fragment() {
             it.adapter = moonsAdapter
             it.layoutManager = LinearLayoutManager(context)
         }
+        setupMoonListeners()
     }
+
+    private fun setupMoonListeners(moons : List<BodiesDataResponse> = emptyList()) {
+        mBinding.searchViewMoons.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                val bodyQuery = query.orEmpty().trim()
+                Snackbar.make(mBinding.root, "Searching $bodyQuery", Snackbar.LENGTH_SHORT).show()
+                filterAndUpdateMoons(bodyQuery, moons)
+                mBinding.searchViewMoons.clearFocus()
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val bodyQuery = newText.orEmpty().trim()
+                filterAndUpdateMoons(bodyQuery, moons)
+                return false
+            }
+        })
+    }
+
+    private fun filterAndUpdateMoons(query : String, newMoons : List<BodiesDataResponse>) {
+        val filteredMoons = newMoons.filter { moon -> moon.englishName.contains(query, ignoreCase = true) }
+        moonsAdapter.updateList(filteredMoons)
+        mBinding.tvFilteredMoons.text = getString(R.string.filtered_moons, filteredMoons.size)
+    }
+
 
     private fun navigateToDetail(id : String){
         findNavController().navigate(DetailFragmentDirections.actionBodyDetailFragmentToSelf
             (bodyID = id, detailAction = DetailAction.LOAD_FROM_API))
     }
 
-    private fun setupListeners(body : DetailBodiesDataResponse, moons : List<BodiesDataResponse>? = null) {
+    private fun setupListeners(body : DetailBodiesDataResponse, moons : List<BodiesDataResponse> = emptyList()) {
          mBinding.floatingActionButtonSaveBody.setOnClickListener {
              saveBodyToLocalDatabase(body)
 
@@ -168,6 +205,7 @@ class DetailFragment : Fragment() {
         mBinding.floatingActionButtonDeleteBody.setOnClickListener {
             deleteBodyFromLocalDatabase(body)
         }
+
     }
 
     private fun deleteBodyFromLocalDatabase(body: DetailBodiesDataResponse) {
@@ -198,5 +236,12 @@ class DetailFragment : Fragment() {
 
     }
 
-
+    private fun formatValueOrHide(value: Double, resId: Int, textView : TextView) : String{
+        if (value == 0.0) {
+            textView.visibility = View.GONE
+            return ""
+        } else {
+            return getString(resId, value)
+        }
+    }
 }

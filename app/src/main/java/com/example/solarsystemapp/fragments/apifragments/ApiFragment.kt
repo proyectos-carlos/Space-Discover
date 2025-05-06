@@ -6,11 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.appcompat.widget.SearchView
+import androidx.collection.emptyObjectList
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.discovernasa.R
 import com.example.discovernasa.databinding.FragmentApiBinding
 import com.example.solarsystemapp.solar_system_api.BodiesDataResponse
 import com.example.solarsystemapp.solar_system_api.BodyType
+import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.getAllBodies
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.searchBodiesByName
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.searchBodyById
@@ -40,19 +47,30 @@ class ApiFragment : Fragment() {
         renderUI()
         setupListeners()
 
-        //By default, trigger the planet chip:
-        mBinding.chipPlanet.isChecked = true
+//        //By default, trigger the planet chip:
+//        mBinding.chipPlanet.isChecked = true
 
     }
 
     private fun renderUI() {
-            adapter = BodyAdapter(bodiesList =  emptyList(),
-                onItemSelected = { id -> navigateToDetail(id) } )
+        CoroutineScope(Dispatchers.IO).launch {
+            // Get earth as default for the first time
+            val initBodies = searchBodyById("earth")?.let { listOf(it) } ?: run { emptyList() }
 
-                activity?.runOnUiThread{
-                   mBinding.recyclerViewBody.adapter = adapter
-                   mBinding.recyclerViewBody.layoutManager = LinearLayoutManager(context)
-                }
+            requireActivity().runOnUiThread {
+                adapter = BodyAdapter(bodiesList =  initBodies,
+                    onItemSelected = { id -> navigateToDetail(id) } )
+                    mBinding.recyclerViewBody.adapter = adapter
+                    mBinding.recyclerViewBody.layoutManager = LinearLayoutManager(context)
+                    mBinding.recyclerViewBody.itemAnimator = DefaultItemAnimator().apply {
+                        addDuration = 300
+                        removeDuration = 200
+                    }
+                mBinding.progressBar.visibility = View.GONE
+            }
+        }
+
+
     }
 
     private fun navigateToDetail(id : String){
@@ -63,11 +81,11 @@ class ApiFragment : Fragment() {
     private fun setupListeners() {
 
         mBinding.searchViewBody.setOnSearchClickListener {
-            mBinding.searchViewBody.queryHint = "Buscar planeta"
+            mBinding.searchViewBody.queryHint = getString(R.string.search_body)
         }
 
 
-        mBinding.searchViewBody.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+        mBinding.searchViewBody.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
 

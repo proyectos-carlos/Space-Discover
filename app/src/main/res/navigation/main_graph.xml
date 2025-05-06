@@ -110,6 +110,17 @@
         android:name="com.example.solarsystemapp.fragments.calendarfragments.SavedApodFragment"
         android:label="fragment_saved_apod"
         tools:layout="@layout/fragment_saved_apod" />
+    <fragment
+        android:id="@+id/settingsFragments"
+        android:name="com.example.solarsystemapp.fragments.settingsfragments.SettingsFragment"
+        android:label="fragment_settings_fragments"
+        tools:layout="@layout/fragment_settings" />
 
+
+    <action
+        android:id="@+id/action_any_to_settingsFragments"
+        app:destination="@id/settingsFragments"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"/>
 
 </navigation>

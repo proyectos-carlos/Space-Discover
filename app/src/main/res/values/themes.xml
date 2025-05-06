@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.DiscoverNasa" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.DiscoverNasa" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,6 +13,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+
 
     <!-- res/values/styles_apod_light.xml -->
     <style name="title_apod">
@@ -52,7 +55,36 @@
     </style>
 
 
+    <style name="settings_title">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 
+
+    <style name="CelestialBodyTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary_body</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="CelestialBodySubtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_secondary_body</item>
+    </style>
+
+    <style name="CelestialBodyDate">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/text_accent_body</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/searchview_background</item>
+        <!-- Opcional: cambia texto y hint -->
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColorHint">?android:textColorHint</item>
+    </style>
 
 
 

@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="135dp"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="@color/cardview_light_background"
-    app:cardElevation="4dp">
+    android:layout_height="140dp"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/background_card_body"
+    app:rippleColor="@color/ripple_color_body"
+    app:strokeColor="@color/text_accent_body"
+    app:strokeWidth="0dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,26 +43,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre del cuerpo"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/black" />
+                style="@style/CelestialBodyTitle" />
 
             <TextView
                 android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tipo de cuerpo"
-                android:textSize="14sp" />
+                style="@style/CelestialBodySubtitle"
+                android:layout_marginVertical="4dp"/>
 
             <TextView
                 android:id="@+id/tvDiscoveryDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Año de descubrimiento"
-                android:textSize="14sp" />
+                style="@style/CelestialBodyDate" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

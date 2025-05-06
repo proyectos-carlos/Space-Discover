@@ -19,4 +19,27 @@
         <!-- Color del texto de los botones -->
         <color name="button_text">#E0F7FA</color>
 
+
+
+        <!-- for body item in recyclerview -->
+        <color name="background_card_body">#1E1E1E</color>
+        <color name="text_primary_body">#F1F1F1</color>
+        <color name="text_secondary_body">#A8A8A8</color>
+        <color name="text_accent_body">#90CAF9</color>
+        <color name="ripple_color_body">#90CAF933</color>
+
+
+        <!-- API FRAGMENT -->
+        <color name="background_fragment_api">#121212</color>
+        <color name="chip_background">#37474F</color>
+        <color name="chip_text">#ECEFF1</color>
+        <color name="chip_checked">#4DD0E1</color>
+        <color name="search_background">#1E1E1E</color>
+        <color name="search_hint">#B0BEC5</color>
+
+
+        <!-- Splash Screen -->
+        <color name="splash_screen">#011940</color>
+
+
 </resources>

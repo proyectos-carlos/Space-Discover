@@ -5,16 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/apiFragment"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:background="@color/background_fragment_api">
 
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/searchViewBody"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/searchview_background"
+        />
 
 
 
@@ -35,7 +38,8 @@
             android:text="@string/planet"
             android:checkable="true"
             android:background="@color/black"
-            app:checkedIcon="@drawable/ic_planet"/>
+            app:checkedIcon="@drawable/ic_planet"
+            />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_moon"
@@ -90,17 +94,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chipGroup"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_body" />
+        tools:listitem="@layout/item_body"
+        android:paddingVertical="4dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminateTint="@color/chip_checked"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

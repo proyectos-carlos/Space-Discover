@@ -1,6 +1,8 @@
 [versions]
 agp = "8.9.0"
+datastorePreferences = "1.1.3"
 glide = "4.12.0"
+googleMaterial = "1.11.0"
 gridlayoutV7 = "28.0.0"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
@@ -43,6 +45,7 @@ picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "pic
 
 #DataStore:
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+androidx-datastore-preferences-v113 = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 
 #Room:
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -51,7 +54,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 
 #Material components:
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-material-v1110 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+material-v1110 = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 
 #Glide:
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
@@ -61,6 +64,7 @@ compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide
 appcompat-v7 = { module = "com.android.support:appcompat-v7", version.ref = "gridlayoutV7" }
 gridlayout-v7 = { module = "com.android.support:gridlayout-v7", version.ref = "gridlayoutV7" }
 
+#Splash Screen:
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
