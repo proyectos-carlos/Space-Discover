@@ -77,6 +77,11 @@ dependencies {
     implementation (libs.androidx.datastore.preferences.v113)
 
     //Splash Screen:
+    implementation (libs.androidx.core.splashscreen)
+
+    //Photo view:
+ //   implementation (libs.photoview)
+
 
 
 //    //Safe args:

@@ -12,6 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
+        <item name="colorOutline">@color/colorOutline</item>
     </style>
 
 
@@ -75,6 +80,22 @@
         <item name="android:textColor">@color/text_accent_body</item>
         <item name="android:textStyle">italic</item>
     </style>
+
+
+    <style name="Theme.DiscoverNasa.Splash" parent="Theme.SplashScreen">
+        <!-- Set your background color -->
+        <item name="windowSplashScreenBackground">@color/splash_screen</item>
+
+        <!-- Set your app icon (should be foreground icon, vector or PNG) -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+
+        <!-- Duration of the icon animation -->
+        <item name="windowSplashScreenAnimationDuration">500</item>
+
+        <!-- Optional: keep splash visible until ready -->
+        <item name="postSplashScreenTheme">@style/Theme.DiscoverNasa</item>
+    </style>
+
 
 
 </resources>

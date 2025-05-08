@@ -19,6 +19,7 @@ interface ApodDAO {
     @Query("SELECT * FROM apod WHERE date = :date")
     suspend fun getApodByDate(date : String) : DataApodLocal?
 
+
     @Delete
     suspend fun deleteApod(apod: DataApodLocal)
 }

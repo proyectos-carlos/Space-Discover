@@ -46,6 +46,7 @@ class DetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         mBinding.progressBar.visibility = View.VISIBLE
         val detailAction = args.detailAction
@@ -55,13 +56,17 @@ class DetailFragment : Fragment() {
             val body = when (detailAction) {
 
                 DetailAction.LOAD_FROM_API -> {
-                    mBinding.floatingActionButtonSaveBody.visibility = View.VISIBLE
+                    requireActivity().runOnUiThread {
+                        mBinding.floatingActionButtonSaveBody.visibility = View.VISIBLE
+                    }
                     loadFromApi(args.bodyID)
                 }
 
                 DetailAction.LOAD_FROM_DATABASE -> {
-                    mBinding.floatingActionButtonDeleteBody.visibility = View.VISIBLE
-                    mBinding.tvMoons.visibility = View.GONE
+                    requireActivity().runOnUiThread {
+                        mBinding.floatingActionButtonDeleteBody.visibility = View.VISIBLE
+                        mBinding.tvMoons.visibility = View.GONE
+                    }
                     loadFromDatabase(args.bodyID)
                 }
             }
@@ -71,9 +76,14 @@ class DetailFragment : Fragment() {
                     renderMainUI(body)
                     setupListeners(body)
                     mBinding.progressBar.visibility = View.GONE
-                } ?: run{
-                    Snackbar.make(mBinding.root, "Error al cargar ID: ${args.bodyID}", Snackbar.LENGTH_SHORT).show()
+                } ?: run {
+                    Snackbar.make(
+                        mBinding.root,
+                        "${getString(R.string.error_loading)} ${args.bodyID}",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
+            }
 
                 //After rendering main UI, render body moons if any:
                 CoroutineScope(Dispatchers.IO).launch {
@@ -86,12 +96,7 @@ class DetailFragment : Fragment() {
                         setupMoonListeners(moons)
                     }
                 }
-            }
         }
-
-
-
-
     }
 
     private suspend fun loadFromApi(bodyID : String) : DetailBodiesDataResponse? {
@@ -121,9 +126,9 @@ class DetailFragment : Fragment() {
 
             // Basic data
             tvName.text = body.englishName
-            tvBodyType.text = "Tipo: ${body.bodyType}"
-            tvDiscoveredBy.text = "Descubierto por: ${body.discoveredBy.ifBlank { "Desconocido" }}"
-            tvDiscoveryDate.text = "Fecha: ${body.discoveryDate.ifBlank { "Desconocida" }}"
+            tvBodyType.text = getString(R.string.body_type, body.bodyType.ifBlank { "Unknown" })
+            tvDiscoveredBy.text = getString(R.string.discovered_by, body.discoveredBy.ifBlank { "Unknown" })
+            tvDiscoveryDate.text = getString(R.string.date, body.discoveryDate.ifBlank { "Unknown"  })
 
 
             // Technical Data

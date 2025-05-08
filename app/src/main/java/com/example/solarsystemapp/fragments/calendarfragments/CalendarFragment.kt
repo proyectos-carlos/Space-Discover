@@ -1,10 +1,13 @@
 package com.example.solarsystemapp.fragments.calendarfragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.DrawableImageViewTarget
@@ -18,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 
 class CalendarFragment : Fragment() {
@@ -36,7 +40,7 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding.progressBar.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.IO).launch {
-            val apod = ApodNetwork.getApod(date = null)
+            val apod = getApodByDate(null) // Null means today's date
             requireActivity().runOnUiThread {
                 apod?.let {
                     renderUI(it)
@@ -49,10 +53,48 @@ class CalendarFragment : Fragment() {
     }
 
     private fun setupListeners(apod: ApodDataResponse) {
-        mBinding.buttonFavorite.setOnClickListener { saveApodToLocal(apod) }
+
+        CoroutineScope(Dispatchers.IO).launch {
+           val apodExists = localDataDatabase.getApodDao().getApodByDate(apod.date)
+            requireActivity().runOnUiThread {
+                apodExists?.let{
+                    toggleButton(mBinding.buttonFavorite, toggle = false)
+                } ?: run{
+                    toggleButton(mBinding.buttonFavorite, toggle = true)
+                    mBinding.buttonFavorite.setOnClickListener { saveApodToLocal(apod) }
+                }
+            }
+        }
+
         mBinding.buttonGoToFavorite.setOnClickListener { navigateToFavorites() }
+        mBinding.buttonSelectDate.setOnClickListener { showDatePicker() }
+
     }
 
+
+
+
+    private fun showDatePicker() {
+        val datePicker = DatePickerFragment{ day, month, year -> onDateSelected(day, month, year) }
+        datePicker.show(parentFragmentManager, getString(R.string.date_picker))
+    }
+
+    private fun onDateSelected(day: String, month: String, year: String){
+        Log.i("BigoCalendar", "$day/$month/$year")
+        val dateSelected = "$year-$month-$day"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val apod = getApodByDate(dateSelected)
+            apod?.let { apodResult ->
+                requireActivity().runOnUiThread {
+                    renderUI(apodResult)
+                    setupListeners(apodResult)
+                }
+            } ?: run{
+                Snackbar.make(mBinding.root, getString(R.string.error_load_apod), Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 
     private fun saveApodToLocal(apod: ApodDataResponse) {
@@ -63,6 +105,8 @@ class CalendarFragment : Fragment() {
                Snackbar.make(mBinding.root, getString(R.string.apod_saved), Snackbar.LENGTH_SHORT)
                    .setAction("OK") {}
                    .show()
+
+               toggleButton(mBinding.buttonFavorite, toggle = false)
            }
        }
     }
@@ -73,24 +117,37 @@ class CalendarFragment : Fragment() {
 
 
 
+    private suspend fun getApodByDate(date : String?) = ApodNetwork.getApod(date = date)
+
+
+
+
 
 
     private fun renderUI(apodResponse : ApodDataResponse){
 
+        //Toast.makeText(context, "this is a media type ${apodResponse.media_type}", Toast.LENGTH_SHORT).show()
         with(mBinding){
             if(apodResponse.media_type == "image"){
                 Glide.with(requireContext())
-                    .load(apodResponse.hdurl ?: apodResponse.url)
+                    .load(apodResponse.url)
                     .centerCrop()
                     .placeholder(R.drawable.ic_image_static)
                     .error(R.drawable.ic_skull)
                     .into(mBinding.apodImageView)
+            }else{
+                apodImageView.setImageResource(R.drawable.ic_no_image)
             }
 
             tvApodTitle.text = apodResponse.title
             tvApodDescription.text = apodResponse.explanation.ifBlank { getString(R.string.no_apod_explanation) }
             tvApodDate.text = apodResponse.date.ifBlank { getString(R.string.no_apod_date) }
-            tvApodCopyright.text = apodResponse.copyright ?: getString(R.string.no_copyright)
+            tvApodCopyright.text = apodResponse.copyright ?: getString(R.string.nasa_author)
         }
+    }
+
+    private fun toggleButton(button: AppCompatButton, toggle : Boolean) {
+        button.isEnabled = toggle
+        button.alpha = if (toggle) 1f else 0.4f
     }
 }

@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/apod_scroll_view"
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="16dp"
+    android:layout_marginHorizontal="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    app:strokeColor="?attr/colorOutline"
+    app:strokeWidth="1dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    android:clickable="true"
+    android:focusable="true">
+
+
+
 
     <LinearLayout
         android:id="@+id/apod_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <!-- Imagen APOD -->
         <ImageView
             android:id="@+id/apodImageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
+            android:layout_height="220dp"
+            android:layout_marginBottom="12dp"
             android:adjustViewBounds="true"
-            android:layout_marginBottom="16dp" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/apod_image" />
 
         <!-- Título -->
         <TextView
             android:id="@+id/tvApodTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="6dp" />
 
         <!-- Descripción -->
         <TextView
             android:id="@+id/tvApodDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#444444"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp" />
 
         <!-- Fecha -->
         <TextView
             android:id="@+id/tvApodDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#666666"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="4dp" />
 
         <!-- Autor -->
@@ -54,13 +68,12 @@
             android:id="@+id/tvApodCopyright"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#888888"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textAlignment="viewEnd"
-            android:layout_marginTop="16dp"
-            android:paddingBottom="16dp" />
-
+            android:layout_marginTop="12dp" />
     </LinearLayout>
 
 
-</ScrollView>
+</com.google.android.material.card.MaterialCardView>
+

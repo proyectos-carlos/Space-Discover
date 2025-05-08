@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <ScrollView
     android:id="@+id/scrollView"
@@ -208,9 +208,10 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            tools:text="BodyType"
-            android:layout_marginVertical="8dp"
-            android:visibility="gone"/>
+            tools:text="Filtered moons: 69420"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:layout_gravity="start" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -239,7 +240,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:backgroundTint="@color/fab_color_add"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -249,7 +251,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_delete"
-        android:backgroundTint="@color/purple_200"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:backgroundTint="@color/fab_color_delete"/>
 
 </FrameLayout>

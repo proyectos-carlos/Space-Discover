@@ -41,5 +41,12 @@
         <!-- Splash Screen -->
         <color name="splash_screen">#011940</color>
 
+        <!-- colors-night.xml -->
+        <color name="colorSurface">#121212</color>
+        <color name="colorOnSurface">#FFFFFF</color>
+        <color name="colorOnSurfaceVariant">#CCCCCC</color>
+        <color name="colorOutline">#333333</color>
 
+        <color name="fab_color_add">#1976D2</color> <!-- un azul más claro que se vea en fondo oscuro -->
+        <color name="fab_color_delete">#7E2F2F</color>
 </resources>

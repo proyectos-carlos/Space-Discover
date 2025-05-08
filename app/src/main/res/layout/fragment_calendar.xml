@@ -83,6 +83,25 @@
 
         </LinearLayout>
 
+        <!-- Looking for another? -->
+        <TextView
+            android:id="@+id/tvAnotherDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/copyright_apod"
+            android:layout_marginTop="16dp"
+            android:text="@string/another_date"
+            android:paddingHorizontal="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSelectDate"
+                android:text="@string/select_apod_date"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                />
+
+
     </LinearLayout>
 
 

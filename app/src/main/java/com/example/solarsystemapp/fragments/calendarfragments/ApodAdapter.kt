@@ -31,16 +31,19 @@ class ApodViewHolder(view : View) : RecyclerView.ViewHolder(view){
         with(binding){
             if(apodResponse.media_type == "image"){
                 Glide.with(context)
-                    .load(apodResponse.hdurl ?: apodResponse.url)
+                    .load(apodResponse.url)
                     .centerCrop()
-                    .placeholder(R.drawable.ic_question_mark)
+                    .placeholder(R.drawable.ic_image_static)
                     .into(apodImageView)
+            }else{
+                apodImageView.setImageResource(R.drawable.ic_no_image)
             }
+
 
             tvApodTitle.text = apodResponse.title
             tvApodDescription.text = apodResponse.explanation.ifBlank { context.getString(R.string.no_apod_explanation) }
             tvApodDate.text = apodResponse.date.ifBlank { context.getString(R.string.no_apod_date) }
-            tvApodCopyright.text = apodResponse.copyright ?: context.getString(R.string.no_copyright)
+            tvApodCopyright.text = apodResponse.copyright ?: context.getString(R.string.nasa_author)
         }
     }
 }

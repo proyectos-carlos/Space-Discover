@@ -36,6 +36,14 @@
 
     <!-- Splash Screen -->
     <color name="splash_screen">#011940</color>
+    <!-- colors.xml -->
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorOnSurfaceVariant">#444444</color>
+    <color name="colorOutline">#D0D0D0</color>
+
+    <color name="fab_color_add">#114981</color>
+    <color name="fab_color_delete">#E27474</color>
 
 
 </resources>

@@ -7,8 +7,8 @@ import com.example.solarsystemapp.nasa_api.ApodDataResponse
 
 @Entity("apod")
 data class DataApodLocal(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0L,
-    val date: String,
+
+    @PrimaryKey val date: String,
     val explanation: String,
     val media_type: String,
     val title: String,

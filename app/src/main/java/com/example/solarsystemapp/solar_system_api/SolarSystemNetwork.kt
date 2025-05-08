@@ -121,14 +121,17 @@ object SolarSystemNetwork {
 
     //Override a body with wikipedia data
     private suspend fun setupBodyWithWikipedia(originalBody: DetailBodiesDataResponse): DetailBodiesDataResponse {
-        // Search with bodyType to avoid errors with some bodies I.E: Kale moon
+        // Search with bodyType and discard refer to, refers to
         val wikiData = WikipediaNetwork
             .searchWikipediaArticle(originalBody.englishName)
 
         return wikiData?.let { wiki ->
+            val isDisambiguation = wiki.extract.contains("refer to", ignoreCase = true)
+                    || wiki.extract.contains("refers to", ignoreCase = true)
+
             originalBody.copy(
                 imageURL = wiki.thumbnail?.source ?: "",
-                description = wiki.extract
+                description = if(isDisambiguation) null else wiki.extract
             )
         } ?: originalBody
     }

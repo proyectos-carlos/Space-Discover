@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_api">Search</string>
     <string name="menu_saved">Saved</string>
-    <string name="menu_calendar">Near events</string>
+    <string name="menu_calendar">Cool pictures</string>
     <string name="planet">Planet</string>
     <string name="moon">Moon</string>
     <string name="star">Star</string>
@@ -16,10 +16,12 @@
     <string name="asteroid_plural">Asteroids</string>
     <string name="star_plural">Star</string>
     <string name="dwarf_planet_plural">Dwarf Planets</string>
-    <string name="technical_data">Technical Data</string>
+    <string name="technical_data">Available body attributes</string>
     <string name="no_description">No description available for this body</string>
     <string name="no_moons">This body has no moons</string>
-
+    <string name="body_type">Body type: %1$s</string>
+    <string name="discovered_by">Discovered by: %1$s</string>
+    <string name="date">Date: %1$s</string>
 
     <!-- Strings with placeholders -->
     <string name="total_moons">This body has %1$d moons</string>
@@ -54,5 +56,16 @@
     <string name="comet_plural">Comets</string>
     <string name="filtered_moons">Filtered moons: %1$d</string>
     <string name="search_body">Search for a body I.E: Mars</string>
+    <string name="select_apod_date">Select another date</string>
+    <string name="date_picker">Select date to load astronomic picture</string>
+    <string name="empty_search_view">Insert a body to search in the search view</string>
+    <string name="searching_body">Searching</string>
+    <string name="no_results_in_filters">No results available for the selected filters</string>
+    <string name="no_results">"No results available for: "</string>
+    <string name="nasa_author">NASA</string>
+    <string name="apod_image">Astronomic picture of the day! =)</string>
+    <string name="another_date">Looking for another date?</string>
+    <string name="error_loading">"Error when loading: "</string>
+
 
 </resources>

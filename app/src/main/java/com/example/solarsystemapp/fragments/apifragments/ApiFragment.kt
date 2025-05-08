@@ -2,14 +2,11 @@ package com.example.solarsystemapp.fragments.apifragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.appcompat.widget.SearchView
-import androidx.collection.emptyObjectList
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +14,6 @@ import com.example.discovernasa.R
 import com.example.discovernasa.databinding.FragmentApiBinding
 import com.example.solarsystemapp.solar_system_api.BodiesDataResponse
 import com.example.solarsystemapp.solar_system_api.BodyType
-import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.getAllBodies
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.searchBodiesByName
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.searchBodyById
@@ -46,11 +42,9 @@ class ApiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         renderUI()
         setupListeners()
-
-//        //By default, trigger the planet chip:
-//        mBinding.chipPlanet.isChecked = true
-
     }
+
+
 
     private fun renderUI() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -91,9 +85,9 @@ class ApiFragment : Fragment() {
 
                 val bodyQuery = query.orEmpty().trim()
                 if(bodyQuery.isEmpty()){
-                    Snackbar.make(mBinding.root, "Por favor ingrese un nombre a buscar", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(mBinding.root, getString(R.string.empty_search_view), Snackbar.LENGTH_SHORT).show()
                 }else{
-                    Snackbar.make(mBinding.root, "Buscando $bodyQuery", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(mBinding.root, "${getString(R.string.searching_body)} $bodyQuery", Snackbar.LENGTH_SHORT).show()
                     updateList()
                 }
 
@@ -102,6 +96,7 @@ class ApiFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean { return false }
         })
+
 
 
        mBinding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
@@ -122,6 +117,8 @@ class ApiFragment : Fragment() {
            Log.i("BigoReport", "Selected types: $selectedTypes")
 
        }
+
+        mBinding.searchViewBody.setOnClickListener { mBinding.searchViewBody.onActionViewExpanded() }
 
 
     }
@@ -146,7 +143,7 @@ class ApiFragment : Fragment() {
 
                 //If no bodies were found (most likely because the ID in search view is invalid), show a snackbar
                 if(bodies.isEmpty()){
-                    Snackbar.make(mBinding.root, "No se encontraron resultados de $query", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(mBinding.root, "${getString(R.string.no_results)} $query", Snackbar.LENGTH_SHORT).show()
                     mBinding.progressBar.visibility = View.GONE
                     return@runOnUiThread
                 }
@@ -165,7 +162,7 @@ class ApiFragment : Fragment() {
 
                     //If no bodies were found after filtering, show a snackbar
                     if(filteredBodies.isEmpty()){
-                        Snackbar.make(mBinding.root, "No se encontraron resultados en los filtros especificados", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(mBinding.root, getString(R.string.no_results_in_filters), Snackbar.LENGTH_SHORT).show()
                         return@let
                     }
 
