@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import com.example.discovernasa.R
 import java.util.Calendar
 
 class DatePickerFragment(val listener : (day : String, month : String, year : String) -> Unit)

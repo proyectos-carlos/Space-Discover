@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.discovernasa.R
-import com.example.discovernasa.databinding.FragmentSavesCategoryBinding
+import com.example.solarsystemapp.R
+import com.example.solarsystemapp.databinding.FragmentSavesCategoryBinding
 import com.example.solarsystemapp.fragments.apifragments.BodyAdapter
 import com.example.solarsystemapp.fragments.apifragments.DetailAction
 import com.example.solarsystemapp.solar_system_local.DatabaseInit

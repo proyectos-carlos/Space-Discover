@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.discovernasa.R
-import com.example.discovernasa.databinding.FragmentApiBinding
+import com.example.solarsystemapp.R
+import com.example.solarsystemapp.databinding.FragmentApiBinding
 import com.example.solarsystemapp.solar_system_api.BodiesDataResponse
 import com.example.solarsystemapp.solar_system_api.BodyType
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork.getAllBodies
@@ -47,11 +48,15 @@ class ApiFragment : Fragment() {
 
 
     private fun renderUI() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch{
             // Get earth as default for the first time
-            val initBodies = searchBodyById("earth")?.let { listOf(it) } ?: run { emptyList() }
+            val initBodies = searchBodyById("earth")?.let { listOf(it) }
+                ?: run {
+                    Snackbar.make(mBinding.root, getString(R.string.error_loading_bodies), Snackbar.LENGTH_SHORT).show()
+                    mBinding.progressBar.visibility = View.GONE
+                    emptyList()
+                }
 
-            requireActivity().runOnUiThread {
                 adapter = BodyAdapter(bodiesList =  initBodies,
                     onItemSelected = { id -> navigateToDetail(id) } )
                     mBinding.recyclerViewBody.adapter = adapter
@@ -61,7 +66,7 @@ class ApiFragment : Fragment() {
                         removeDuration = 200
                     }
                 mBinding.progressBar.visibility = View.GONE
-            }
+
         }
 
 
@@ -126,10 +131,10 @@ class ApiFragment : Fragment() {
     //Update list whether chips are selected or query is sent
     private fun updateList() {
 
-        val query = mBinding.searchViewBody.query.toString()
+        val query = mBinding.searchViewBody.query.toString().trim()
         mBinding.progressBar.visibility = View.VISIBLE
 
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
 
             //Get bodies depending if query is blank or not. Get empty list if no bodies were found
             val bodies: List<BodiesDataResponse> = if (query.isBlank()) {
@@ -138,14 +143,11 @@ class ApiFragment : Fragment() {
                 searchBodiesByName(query)
             }
 
-
-            activity?.runOnUiThread {
-
                 //If no bodies were found (most likely because the ID in search view is invalid), show a snackbar
                 if(bodies.isEmpty()){
                     Snackbar.make(mBinding.root, "${getString(R.string.no_results)} $query", Snackbar.LENGTH_SHORT).show()
                     mBinding.progressBar.visibility = View.GONE
-                    return@runOnUiThread
+                    return@launch
                 }
 
                 bodies.let { it ->
@@ -168,10 +170,9 @@ class ApiFragment : Fragment() {
 
                     Log.i("BigoReport", "Current list filtered $filteredBodies")
                     adapter.updateList(filteredBodies)
-
                 }
                 mBinding.progressBar.visibility = View.GONE
-            }
+
         }
 
     }

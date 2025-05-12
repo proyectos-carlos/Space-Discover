@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.discovernasa.databinding.FragmentSavedApodBinding
+import com.example.solarsystemapp.databinding.FragmentSavedApodBinding
 import com.example.solarsystemapp.solar_system_local.DatabaseInit.Companion.localDataDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ class SavedApodFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View{
         mBinding = FragmentSavedApodBinding.inflate(inflater, container, false)
         return mBinding.root
     }
@@ -31,15 +32,20 @@ class SavedApodFragment : Fragment() {
     }
 
     private fun setupUI() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             val apodList = localDataDatabase.getApodDao().getAllApod()
-            requireActivity().runOnUiThread {
-                with(mBinding.recyclerViewApod){
-                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    adapter = ApodAdapter(apodList)
-                    setHasFixedSize(true)
+
+                if(apodList.isEmpty()) {
+                    mBinding.textViewEmpty.visibility = View.VISIBLE
+                    return@launch
                 }
-            }
+
+                    with(mBinding.recyclerViewApod){
+                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        adapter = ApodAdapter(apodList)
+                        setHasFixedSize(true)
+                    }
+
         }
     }
 

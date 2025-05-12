@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.discovernasa.R
-import com.example.discovernasa.databinding.FragmentDetailBinding
+import com.example.solarsystemapp.R
+import com.example.solarsystemapp.databinding.FragmentDetailBinding
 import com.example.solarsystemapp.solar_system_api.BodiesDataResponse
 import com.example.solarsystemapp.solar_system_api.DetailBodiesDataResponse
 import com.example.solarsystemapp.solar_system_api.SolarSystemNetwork
@@ -52,26 +53,20 @@ class DetailFragment : Fragment() {
         val detailAction = args.detailAction
 
         // Render main UI
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             val body = when (detailAction) {
 
                 DetailAction.LOAD_FROM_API -> {
-                    requireActivity().runOnUiThread {
-                        mBinding.floatingActionButtonSaveBody.visibility = View.VISIBLE
-                    }
+                    mBinding.floatingActionButtonSaveBody.visibility = View.VISIBLE
                     loadFromApi(args.bodyID)
                 }
 
                 DetailAction.LOAD_FROM_DATABASE -> {
-                    requireActivity().runOnUiThread {
-                        mBinding.floatingActionButtonDeleteBody.visibility = View.VISIBLE
-                        mBinding.tvMoons.visibility = View.GONE
-                    }
+                    mBinding.floatingActionButtonDeleteBody.visibility = View.VISIBLE
+                    mBinding.tvMoons.visibility = View.GONE
                     loadFromDatabase(args.bodyID)
                 }
             }
-
-            requireActivity().runOnUiThread {
                 body?.let {
                     renderMainUI(body)
                     setupListeners(body)
@@ -83,18 +78,16 @@ class DetailFragment : Fragment() {
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
-            }
+
 
                 //After rendering main UI, render body moons if any:
-                CoroutineScope(Dispatchers.IO).launch {
+                launch{
                     val moons = when (detailAction) {
                         DetailAction.LOAD_FROM_API -> SolarSystemNetwork.getAllMoons(body?.moons ?: emptyList())
                         DetailAction.LOAD_FROM_DATABASE -> emptyList()
                     }
-                    requireActivity().runOnUiThread {
                         renderMoons(moons)
                         setupMoonListeners(moons)
-                    }
                 }
         }
     }
@@ -187,6 +180,9 @@ class DetailFragment : Fragment() {
                 return false
             }
         })
+
+        mBinding.searchViewMoons.setOnClickListener { mBinding.searchViewMoons.onActionViewExpanded() }
+
     }
 
     private fun filterAndUpdateMoons(query : String, newMoons : List<BodiesDataResponse>) {
@@ -214,29 +210,27 @@ class DetailFragment : Fragment() {
     }
 
     private fun deleteBodyFromLocalDatabase(body: DetailBodiesDataResponse) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             DatabaseInit.localDataDatabase.getBodyDao().deleteBody(body.toLocal())
             Log.i("BigoLocalDatabaseDeleted", DatabaseInit.localDataDatabase.getBodyDao().getAllBodies().toString())
 
-            requireActivity().runOnUiThread {
-                Snackbar.make(mBinding.root, "Deleted ${body.englishName}", Snackbar.LENGTH_SHORT).show()
-                findNavController().navigate(DetailFragmentDirections.actionBodyDetailFragmentToSavesFragment())
+            Snackbar.make(mBinding.root, "Deleted ${body.englishName}", Snackbar.LENGTH_SHORT).show()
+            findNavController().navigate(DetailFragmentDirections.actionBodyDetailFragmentToSavesFragment())
 
-            }
+
         }
     }
 
     private fun saveBodyToLocalDatabase(body : DetailBodiesDataResponse) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             DatabaseInit.localDataDatabase.getBodyDao().insertBody(body.toLocal())
             Log.i("BigoLocalDatabaseAdded", DatabaseInit.localDataDatabase.getBodyDao().getAllBodies().toString())
 
-            requireActivity().runOnUiThread {
                 Snackbar.make(mBinding.floatingActionButtonSaveBody, getString(R.string.saved_body, body.englishName),
                     Snackbar.LENGTH_SHORT)
                     .setAction("OK"){}//Close snackbar
                     .show()
-            }
+
         }
 
     }

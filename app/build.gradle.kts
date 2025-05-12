@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.discovernasa"
+    namespace = "com.example.solarsystemapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.discovernasa"
+        applicationId = "com.example.solarsystemapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

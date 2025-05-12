@@ -6,16 +6,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 
 /*
 Wikipedia network singleton
 This will provide information such as image of the bodies as well as a description
  */
 
-object WikipediaNetwork{
+object WikipediaNetwork {
 
-     private val retrofit : Retrofit by lazy {
-            Retrofit.Builder()
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
             .baseUrl(Tools.BASE_URL_WIKIPEDIA)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -25,27 +26,36 @@ object WikipediaNetwork{
         retrofit.create(WikipediaApiService::class.java)
     }
 
-    suspend fun searchWikipediaArticle(query : String) : WikipediaSummaryResponse?{
-        return withContext(Dispatchers.IO){
+    suspend fun searchWikipediaArticle(query: String): WikipediaSummaryResponse? {
+        return withContext(Dispatchers.IO) {
 
-            val myResponse = wikipediaApi.getSummary(query)
+            try {
+                val myResponse = wikipediaApi.getSummary(query)
 
-            if(!myResponse.isSuccessful || myResponse.body() == null){
-                Log.i("BigoWikipedia", "La respuesta no funciona ${myResponse.body()}")
+                if (!myResponse.isSuccessful || myResponse.body() == null) {
+                    Log.i("BigoWikipedia", "La respuesta no funciona ${myResponse.body()}")
+                    return@withContext null
+                }
+
+                val bodiesResult = myResponse.body()!!
+
+                Log.i("BigoWikipedia", "El resultado es $bodiesResult")
+                if (bodiesResult.thumbnail == null && bodiesResult.title.isBlank()) {
+                    Log.i("BigoWikipedia", "No se encontró el artículo de wikipedia para $query")
+                    return@withContext null
+                }
+
+                return@withContext bodiesResult
+            } catch (e: IOException) {
+                Log.i("BigoWikipedia", "La respuesta no funciona ${e.message} causa: ${e.cause}")
+                return@withContext null
+            } catch (e: Exception) {
+                Log.i("BigoWikipedia", "La respuesta no funciona ${e.message} causa: ${e.cause}")
                 return@withContext null
             }
 
-            val bodiesResult = myResponse.body()!!
-
-            Log.i("BigoWikipedia", "El resultado es $bodiesResult")
-            if (bodiesResult.thumbnail == null && bodiesResult.title.isBlank()) {
-                Log.i("BigoWikipedia", "No se encontró el artículo de wikipedia para $query")
-                return@withContext null
-            }
-
-            return@withContext bodiesResult
         }
+
+
     }
-
-
 }

@@ -20,6 +20,10 @@
         <color name="button_text">#E0F7FA</color>
 
 
+        <color name="primary">#222E87</color> <!-- Azul más oscuro para noche -->
+        <color name="primary_variant">#050A1F</color>
+        <color name="on_primary">#FFFFFF</color>
+
 
         <!-- for body item in recyclerview -->
         <color name="background_card_body">#1E1E1E</color>

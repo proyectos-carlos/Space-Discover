@@ -12,6 +12,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 
 object SolarSystemNetwork {
 
@@ -30,7 +31,7 @@ object SolarSystemNetwork {
 
      suspend fun searchBodyById(query: String): BodiesDataResponse? = withContext(Dispatchers.IO) {
 
-
+    try {
         val myResponse = solarSystemApi.getBodiesById(query)
 
         if (!myResponse.isSuccessful || myResponse.body() == null) {
@@ -45,24 +46,33 @@ object SolarSystemNetwork {
             Log.i("BigoSolarSystem", "El cuerpo no se encontró, probablemente el ID es inválido")
             return@withContext null
         }
-
-
-
         return@withContext bodiesResult
+    }catch (e : IOException){
+        Log.i("BigoSolarSystem", "La respuesta no funciona ${e.message} causa: ${e.cause}")
+        return@withContext null
+    }catch (e : Exception){
+        Log.i("BigoSolarSystem", "La respuesta no funciona ${e.message} causa: ${e.cause}")
+        return@withContext null
+    }
 
     }
 
 
     suspend fun getAllBodies(): List<BodiesDataResponse>? = withContext(Dispatchers.IO) {
-        val myResponse = solarSystemApi.getAllBodies()
-        if (!myResponse.isSuccessful || myResponse.body() == null) {
-            Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.code()}")
+        try {
+            val myResponse = solarSystemApi.getAllBodies()
+            if (!myResponse.isSuccessful || myResponse.body() == null) {
+                Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.code()}")
+                return@withContext null
+            }
+
+            val bodiesResult = myResponse.body()!!.bodies
+
+            return@withContext bodiesResult
+        }catch (e : Exception){
+            Log.i("BigoSolarSystem", "La respuesta no funciona ${e.message} causa: ${e.cause}")
             return@withContext null
         }
-
-        val bodiesResult = myResponse.body()!!.bodies
-
-        return@withContext bodiesResult
     }
 
     suspend fun searchBodiesByName(query: String): List<BodiesDataResponse> = withContext(Dispatchers.IO) {
@@ -76,27 +86,32 @@ object SolarSystemNetwork {
 
     suspend fun getDetailBodyById(query: String): DetailBodiesDataResponse? =
         withContext(Dispatchers.IO) {
+            try {
 
-            val myResponse = solarSystemApi.getDetailedBodyById(query)
+                val myResponse = solarSystemApi.getDetailedBodyById(query)
 
-            if (!myResponse.isSuccessful || myResponse.body() == null) {
-                Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.body()}")
+                if (!myResponse.isSuccessful || myResponse.body() == null) {
+                    Log.i("BigoSolarSystem", "La respuesta no funciona ${myResponse.body()}")
+                    return@withContext null
+                }
+
+                val bodyResult = setupBodyWithWikipedia(myResponse.body()!!)
+                Log.i("BigoSolarSystem", "El resultado es $bodyResult")
+
+                if (bodyResult.englishName.isBlank() && bodyResult.bodyType.isBlank()) {
+                    Log.i(
+                        "BigoSolarSystem",
+                        "El cuerpo no se encontró, probablemente el ID es inválido"
+                    )
+                    return@withContext null
+                }
+
+
+                return@withContext bodyResult
+            }catch (e : Exception){
+                Log.i("BigoSolarSystem", "La respuesta no funciona ${e.message} causa: ${e.cause}")
                 return@withContext null
             }
-
-            val bodyResult = setupBodyWithWikipedia(myResponse.body()!!)
-            Log.i("BigoSolarSystem", "El resultado es $bodyResult")
-
-            if (bodyResult.englishName.isBlank() && bodyResult.bodyType.isBlank()) {
-                Log.i(
-                    "BigoSolarSystem",
-                    "El cuerpo no se encontró, probablemente el ID es inválido"
-                )
-                return@withContext null
-            }
-
-
-            return@withContext bodyResult
         }
 
 

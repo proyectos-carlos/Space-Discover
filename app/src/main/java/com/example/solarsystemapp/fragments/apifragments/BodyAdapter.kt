@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.example.discovernasa.R
-import com.example.discovernasa.databinding.ItemBodyBinding
+import com.example.solarsystemapp.R
+import com.example.solarsystemapp.databinding.ItemBodyBinding
 import com.example.solarsystemapp.solar_system_api.BodiesDataResponse
 import com.example.solarsystemapp.solar_system_api.BodyType
 

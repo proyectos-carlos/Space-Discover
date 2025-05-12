@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.discovernasa.R
-import com.example.discovernasa.databinding.ItemApodBinding
+import com.example.solarsystemapp.R
+import com.example.solarsystemapp.databinding.ItemApodBinding
 import com.example.solarsystemapp.solar_system_local.DataApodLocal
 
 class ApodAdapter(val apodList : List<DataApodLocal>) :  RecyclerView.Adapter<ApodViewHolder>(){

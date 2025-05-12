@@ -66,6 +66,9 @@
     <string name="apod_image">Astronomic picture of the day! =)</string>
     <string name="another_date">Looking for another date?</string>
     <string name="error_loading">"Error when loading: "</string>
+    <string name="saved_bodies">Saved bodies</string>
+    <string name="error_loading_bodies">Couldn\'t load bodies. Check your network connection</string>
+    <string name="no_saved_images">No saved images</string>
 
 
 </resources>

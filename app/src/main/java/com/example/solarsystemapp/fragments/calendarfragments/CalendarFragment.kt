@@ -6,13 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.DrawableImageViewTarget
-import com.example.discovernasa.R
-import com.example.discovernasa.databinding.FragmentCalendarBinding
+import com.example.solarsystemapp.R
+import com.example.solarsystemapp.databinding.FragmentCalendarBinding
 import com.example.solarsystemapp.nasa_api.ApodDataResponse
 import com.example.solarsystemapp.nasa_api.ApodNetwork
 import com.example.solarsystemapp.solar_system_local.DatabaseInit.Companion.localDataDatabase
@@ -21,8 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.net.URL
-
+import kotlinx.coroutines.withContext
 
 class CalendarFragment : Fragment() {
 
@@ -39,36 +37,40 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.progressBar.visibility = View.VISIBLE
-        CoroutineScope(Dispatchers.IO).launch {
+        setupOfflineListeners()
+
+        viewLifecycleOwner.lifecycleScope.launch {
             val apod = getApodByDate(null) // Null means today's date
-            requireActivity().runOnUiThread {
+
                 apod?.let {
                     renderUI(it)
-                    setupListeners(it)
+                    setupOnlineListeners(it)
                     mBinding.progressBar.visibility = View.GONE
                 } ?: run{ Snackbar.make(mBinding.root, getString(R.string.error_load_apod), Snackbar.LENGTH_SHORT).show() }
-            }
+
         }
 
     }
 
-    private fun setupListeners(apod: ApodDataResponse) {
+    private suspend fun setupOnlineListeners(apod: ApodDataResponse) {
 
-        CoroutineScope(Dispatchers.IO).launch {
-           val apodExists = localDataDatabase.getApodDao().getApodByDate(apod.date)
-            requireActivity().runOnUiThread {
+
+           val apodExists = withContext(Dispatchers.IO){
+               localDataDatabase.getApodDao().getApodByDate(apod.date)
+           }
+
                 apodExists?.let{
                     toggleButton(mBinding.buttonFavorite, toggle = false)
                 } ?: run{
                     toggleButton(mBinding.buttonFavorite, toggle = true)
                     mBinding.buttonFavorite.setOnClickListener { saveApodToLocal(apod) }
                 }
-            }
-        }
-
-        mBinding.buttonGoToFavorite.setOnClickListener { navigateToFavorites() }
         mBinding.buttonSelectDate.setOnClickListener { showDatePicker() }
 
+    }
+
+    private fun setupOfflineListeners() {
+        mBinding.buttonGoToFavorite.setOnClickListener { navigateToFavorites() }
     }
 
 
@@ -83,13 +85,11 @@ class CalendarFragment : Fragment() {
         Log.i("BigoCalendar", "$day/$month/$year")
         val dateSelected = "$year-$month-$day"
 
-        CoroutineScope(Dispatchers.IO).launch {
+         viewLifecycleOwner.lifecycleScope.launch {
             val apod = getApodByDate(dateSelected)
             apod?.let { apodResult ->
-                requireActivity().runOnUiThread {
                     renderUI(apodResult)
-                    setupListeners(apodResult)
-                }
+                    setupOnlineListeners(apodResult)
             } ?: run{
                 Snackbar.make(mBinding.root, getString(R.string.error_load_apod), Snackbar.LENGTH_SHORT).show()
             }
@@ -98,16 +98,14 @@ class CalendarFragment : Fragment() {
 
 
     private fun saveApodToLocal(apod: ApodDataResponse) {
-       CoroutineScope(Dispatchers.IO).launch {
+       viewLifecycleOwner.lifecycleScope.launch {
            localDataDatabase.getApodDao().insertApod(apod.toLocal())
-
-           requireActivity().runOnUiThread {
                Snackbar.make(mBinding.root, getString(R.string.apod_saved), Snackbar.LENGTH_SHORT)
                    .setAction("OK") {}
                    .show()
 
                toggleButton(mBinding.buttonFavorite, toggle = false)
-           }
+
        }
     }
 

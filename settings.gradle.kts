@@ -25,6 +25,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Discover Nasa"
+rootProject.name = "Solar System App"
 include(":app")
  

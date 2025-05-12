@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.discovernasa.databinding.FragmentSettingsBinding
 import com.example.solarsystemapp.MainActivity
 import com.example.solarsystemapp.Tools
+import com.example.solarsystemapp.databinding.FragmentSettingsBinding
 import com.example.solarsystemapp.localdata.LocalDatastore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
