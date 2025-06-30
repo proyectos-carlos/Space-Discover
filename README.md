@@ -2,6 +2,9 @@
 This is one of my first android apps. Filter information from the Open Solar System API  
 Include native android components such as: RecyclerView, DatePicker, Navigation Graph
 
+**Google play: https://play.google.com/store/apps/details?id=com.bigoblog.solarsystemapp**
+
+
 Key features:
 
 🔍 Search celestial bodies by name or category
